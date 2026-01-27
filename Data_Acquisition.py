@@ -100,15 +100,11 @@ class DataAcquisition:
             True if successful
         """
         if not HAS_NTLM:
-            print("  requests_ntlm not installed, skipping AOD flight data")
             return False
         
         try:
             api_url = self.cfg.aod_flights_api
             years_included = self.cfg.years_included
-            
-            print(f"  API URL: {api_url}")
-            print("  Fetching flight data...")
             
             response = self.session.get(
                 api_url, 
@@ -149,8 +145,6 @@ class DataAcquisition:
                         'back_seat': back_seat
                     }
             
-            print(f"  ✓ Found {len(latest_flights)} unique airports with recent flights")
-            
             # Save to CSV
             flights_path = self.data_dir / "flights_data.csv"
             with open(flights_path, 'w') as f:
@@ -158,11 +152,9 @@ class DataAcquisition:
                 for code, flight in sorted(latest_flights.items(), key=lambda x: x[1]['date'], reverse=True):
                     f.write(f"{code},{flight['date']},{flight['front_seat']},{flight['back_seat']}\n")
             
-            print(f"  ✓ Saved to {flights_path}")
             return True
             
         except Exception as e:
-            print(f"  ✗ Flight data download failed: {e}")
             return False
     
     # AOD COMMENTS - uses cfg.aod_comments_url
@@ -178,20 +170,13 @@ class DataAcquisition:
         """
         try:
             url = self.cfg.aod_comments_url
-            print(f"  URL: {url}")
-            print("  Fetching comments...")
-            
             gs_df = pandas.read_csv(url, header=3)
             
             comments_path = self.data_dir / "comments_data.csv"
             gs_df.to_csv(comments_path, index=False)
-            
-            print(f"  ✓ Downloaded {len(gs_df)} comment entries")
-            print(f"  ✓ Saved to {comments_path}")
             return True
             
         except Exception as e:
-            print(f"  ✗ Comments download failed: {e}")
             return False
     
     # FAA NASR DATA - uses cfg.nasr_file_finder
@@ -213,14 +198,10 @@ class DataAcquisition:
         required_files = ['APT_BASE.csv', 'APT_RWY.csv', 'APT_RWY_END.csv']
         
         if not force and all((self.apt_data_dir / f).exists() for f in required_files):
-            print("  ✓ NASR data already exists (use force=True to re-download)")
             return True
         
         try:
             api_url = self.cfg.nasr_file_finder
-            print(f"  API: {api_url}")
-            print("  Fetching current NASR cycle info...")
-            
             params = {"edition": "current"}
             headers = {"Accept": "application/json"}
             
@@ -229,49 +210,32 @@ class DataAcquisition:
             
             data = response.json()
             download_url = data["edition"][0]["product"]["url"]
-            edition_date = data["edition"][0]["editionDate"]
-            
-            print(f"  Edition: {edition_date}")
-            print(f"  Download URL: {download_url}")
             
             with tempfile.TemporaryDirectory() as tmpdir:
                 zip_path = Path(tmpdir) / "nasr_data.zip"
                 
-                print("  Downloading NASR zip file...")
                 response = self.session.get(download_url, stream=True, timeout=120)
                 response.raise_for_status()
-                
-                total_size = int(response.headers.get('content-length', 0))
-                downloaded = 0
                 
                 with open(zip_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
-                        downloaded += len(chunk)
-                        if total_size > 0:
-                            print(self._progress_bar(downloaded, total_size), end='', flush=True)
-                print()
                 
-                print("  Extracting NASR data...")
                 extract_dir = Path(tmpdir) / "extracted"
                 with zipfile.ZipFile(zip_path, 'r') as zf:
                     zf.extractall(extract_dir)
                 
                 # NASR zip contains nested zip: CSV_Data/<date>_CSV.zip
-                # Find and extract the inner CSV zip
                 inner_zips = list(extract_dir.rglob("*_CSV.zip"))
                 if inner_zips:
-                    print(f"  Found inner CSV zip: {inner_zips[0].name}")
                     csv_extract_dir = extract_dir / "csv_data"
                     with zipfile.ZipFile(inner_zips[0], 'r') as inner_zf:
                         inner_zf.extractall(csv_extract_dir)
-                    # Update search path to include inner extraction
                     search_dirs = [extract_dir, csv_extract_dir]
                 else:
                     search_dirs = [extract_dir]
                 
                 for csv_file in required_files:
-                    found = False
                     for search_dir in search_dirs:
                         matches = list(search_dir.rglob(csv_file))
                         if matches:
@@ -279,17 +243,11 @@ class DataAcquisition:
                             dst = self.apt_data_dir / csv_file
                             df = pandas.read_csv(src, low_memory=False)
                             df.to_csv(dst, index=False)
-                            print(f"  ✓ Extracted: {csv_file} ({len(df)} records)")
-                            found = True
                             break
-                    if not found:
-                        print(f"  ✗ Could not find {csv_file} in archive")
             
-            print("  ✓ NASR download complete!")
             return True
             
         except Exception as e:
-            print(f"  ✗ NASR download failed: {e}")
             return False
     
     # DLA CONTRACT FUEL - uses cfg.dla_fuel_check and cfg.dla_fuel_download
@@ -309,38 +267,27 @@ class DataAcquisition:
         fuel_path = self.data_dir / "fuel_data.csv"
         
         if not force and fuel_path.exists():
-            print("  ✓ Fuel data already exists (use force=True to re-download)")
             return True
         
         try:
             check_url = self.cfg.dla_fuel_check
             download_url = self.cfg.dla_fuel_download
             
-            print(f"  Check URL: {check_url}")
             response = self.session.get(check_url, verify=False, timeout=30)
-            print("  ✓ DLA site accessible")
-            
-            print(f"  Download URL: {download_url}")
-            print("  Downloading fuel data...")
-            
             response = self.session.get(download_url, verify=False, timeout=60)
             response.raise_for_status()
             
             with open(fuel_path, 'wb') as f:
                 f.write(response.content)
             
-            print(f"  ✓ Fuel data saved to {fuel_path}")
             return True
             
         except Exception as e:
-            print(f"  ✗ Fuel download failed: {e}")
-            
             # Try backup
             backup = Path("Alecs Code") / "DATA" / "fuel_data.csv"
             if backup.exists():
                 import shutil
                 shutil.copy(backup, fuel_path)
-                print(f"  ✓ Using backup fuel data from {backup}")
                 return True
             
             return False
@@ -364,14 +311,10 @@ class DataAcquisition:
         
         # Check if we already have PDFs
         if not force and afd_dir.exists() and any(afd_dir.glob("*.pdf")):
-            print(f"  ✓ DCS/AFD data already exists ({len(list(afd_dir.glob('*.pdf')))} PDFs)")
             return True
         
         try:
             api_url = self.cfg.dcs_file_finder
-            print(f"  API: {api_url}")
-            print("  Fetching current DCS cycle info...")
-            
             params = {"edition": "current"}
             headers = {"Accept": "application/json"}
             
@@ -380,30 +323,17 @@ class DataAcquisition:
             
             data = response.json()
             download_url = data["edition"][0]["product"]["url"]
-            edition_date = data["edition"][0]["editionDate"]
-            
-            print(f"  Edition: {edition_date}")
-            print(f"  Download URL: {download_url}")
             
             with tempfile.TemporaryDirectory() as tmpdir:
                 zip_path = Path(tmpdir) / "dcs_data.zip"
                 
-                print("  Downloading DCS zip file (this is large, ~200MB)...")
                 response = self.session.get(download_url, stream=True, timeout=300)
                 response.raise_for_status()
-                
-                total_size = int(response.headers.get('content-length', 0))
-                downloaded = 0
                 
                 with open(zip_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
-                        downloaded += len(chunk)
-                        if total_size > 0:
-                            print(self._progress_bar(downloaded, total_size), end='', flush=True)
-                print()
                 
-                print("  Extracting DCS PDFs...")
                 extract_dir = Path(tmpdir) / "extracted"
                 with zipfile.ZipFile(zip_path, 'r') as zf:
                     zf.extractall(extract_dir)
@@ -413,21 +343,15 @@ class DataAcquisition:
                 
                 # Find all PDFs in extracted content
                 pdf_files = list(extract_dir.rglob("*.pdf"))
-                print(f"  Found {len(pdf_files)} PDF files")
                 
                 for pdf in pdf_files:
                     dst = afd_dir / pdf.name
                     import shutil
                     shutil.copy(pdf, dst)
-                
-                print(f"  ✓ Copied {len(pdf_files)} PDFs to {afd_dir}")
             
-            print("  ✓ DCS download complete!")
             return True
             
         except Exception as e:
-            print(f"  ✗ DCS download failed: {e}")
-            traceback.print_exc()
             return False
     
     # JASU FINDER - parses DCS PDFs for JASU references
@@ -446,8 +370,6 @@ class DataAcquisition:
         try:
             import fitz  # PyMuPDF - faster than PyPDF2
         except ImportError:
-            print("  ✗ PyMuPDF not installed - cannot parse JASU data")
-            print("    Run: pip install pymupdf")
             return False
         
         import re
@@ -456,7 +378,6 @@ class DataAcquisition:
         afd_dir = self.data_dir / "afd"
         
         if not afd_dir.exists() or not any(afd_dir.glob("*.pdf")):
-            print("  ✗ No AFD PDFs found - run DCS download first")
             return False
         
         def extract_icao_jasu_from_text(text: str) -> list:
@@ -519,26 +440,14 @@ class DataAcquisition:
                 # Fall back to all PDFs if naming pattern doesn't match
                 pdf_files = [f for f in afd_dir.iterdir() if f.suffix.lower() == '.pdf']
             
-            print(f"  Scanning {len(pdf_files)} PDF files for JASU references...")
-            
             jasu_airports = set()
             
             # Parallel processing for speed
             with ThreadPoolExecutor() as executor:
                 futures = {executor.submit(process_pdf, pdf): pdf for pdf in pdf_files}
-                completed = 0
                 for future in as_completed(futures):
                     result = future.result()
                     jasu_airports.update(result)
-                    completed += 1
-                    
-                    # Progress bar
-                    pct = int(100 * completed / len(pdf_files))
-                    bar_len = 50
-                    filled = int(bar_len * completed / len(pdf_files))
-                    print(f"\r  [{'=' * filled}{' ' * (bar_len - filled)}] {pct}%", end='', flush=True)
-            
-            print(f"\n  ✓ Found {len(jasu_airports)} airports with JASU")
             
             # Save to CSV
             jasu_path = self.data_dir / "jasu_data.csv"
@@ -547,12 +456,9 @@ class DataAcquisition:
                 for icao in sorted(jasu_airports):
                     f.write(f"{icao}\n")
             
-            print(f"  ✓ Saved to {jasu_path}")
             return True
             
         except Exception as e:
-            print(f"  ✗ JASU parsing failed: {e}")
-            traceback.print_exc()
             return False
     
     # MAIN EXECUTION
@@ -564,10 +470,6 @@ class DataAcquisition:
         results = {}
         
         # PHASE 1: Parallel downloads for small/fast API calls
-        print("\n" + "="*60)
-        print("PHASE 1: Parallel API downloads (flights, comments, fuel)")
-        print("="*60)
-        
         parallel_tasks = {
             'flights': self.download_flights,
             'comments': self.download_comments,
@@ -580,36 +482,15 @@ class DataAcquisition:
                 name = futures[future]
                 try:
                     results[name] = future.result()
-                    status = "✓" if results[name] else "✗"
-                    print(f"  {name}: {status}")
                 except Exception as e:
                     results[name] = False
-                    print(f"  {name}: ✗ Error - {e}")
         
-        # PHASE 2: Large sequential downloads (need progress bars)
-        print("\n" + "="*60)
-        print("PHASE 2: FAA NASR data (airports/runways)")
-        print("="*60)
+        # PHASE 2: Large sequential downloads
         results['nasr'] = self.download_nasr(force=force)
-        
-        print("\n" + "="*60)
-        print("PHASE 3: FAA DCS (Digital Chart Supplement)")
-        print("="*60)
         results['dcs'] = self.download_dcs(force=force)
         
         # PHASE 3: Parse JASU (depends on DCS)
-        print("\n" + "="*60)
-        print("PHASE 4: Parse JASU data from DCS PDFs")
-        print("="*60)
         results['jasu'] = self.parse_jasu()
-        
-        # Summary
-        print("\n" + "="*60)
-        print("DATA ACQUISITION SUMMARY")
-        print("="*60)
-        for source, success in results.items():
-            status = "✓ Success" if success else "✗ Failed"
-            print(f"  {source}: {status}")
         
         return results
 
@@ -626,15 +507,8 @@ def run(cfg) -> Dict[str, bool]:
     Returns:
         Dict mapping source name to success status
     """
-    print("\nUsing API URLs from cfg object:")
-    print(f"  AOD Flights: {cfg.aod_flights_api}")
-    print(f"  AOD Comments: {cfg.aod_comments_url}")
-    print(f"  FAA NASR: {cfg.nasr_file_finder}")
-    print(f"  FAA DCS: {cfg.dcs_file_finder}")
-    print(f"  DLA Fuel: {cfg.dla_fuel_download}")
-    
     da = DataAcquisition(cfg)
     results = da.run_all(force=cfg.force_download)
     
-    print("\nData acquisition complete!")
+    print("Data acquisition complete!")
     return results
