@@ -409,17 +409,20 @@ def run(cfg=None) -> Dict[str, Dict]:
         data_path = DATA
     
     # Load all data sources
+    print("Loading airport and runway data...")
     apt, rwy_lookup = load_runway_data()
     fuel_set, jasu_set = load_reference_sets()
     wb = load_wb_list(wb_path)
     
     # Build master dictionary
+    print("Building master dictionary...")
     master_dict = build_master_dict(apt, rwy_lookup, fuel_set, jasu_set, wb)
     
     # Save master dict to Excel
     pd.DataFrame.from_dict(master_dict, orient='index').to_excel('T38_masterdict.xlsx')
     
     # Generate KML
+    print("Generating KML file...")
     date_str = get_date_string()
     num_airports = generate_kml(master_dict, wb, date_str, version)
     

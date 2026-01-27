@@ -214,12 +214,20 @@ class DataAcquisition:
             with tempfile.TemporaryDirectory() as tmpdir:
                 zip_path = Path(tmpdir) / "nasr_data.zip"
                 
+                print("  Downloading NASR data...")
                 response = self.session.get(download_url, stream=True, timeout=120)
                 response.raise_for_status()
+                
+                total_size = int(response.headers.get('content-length', 0))
+                downloaded = 0
                 
                 with open(zip_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
+                        downloaded += len(chunk)
+                        if total_size > 0:
+                            print(self._progress_bar(downloaded, total_size), end='', flush=True)
+                print()
                 
                 extract_dir = Path(tmpdir) / "extracted"
                 with zipfile.ZipFile(zip_path, 'r') as zf:
@@ -327,12 +335,20 @@ class DataAcquisition:
             with tempfile.TemporaryDirectory() as tmpdir:
                 zip_path = Path(tmpdir) / "dcs_data.zip"
                 
+                print("  Downloading DCS data (~200MB)...")
                 response = self.session.get(download_url, stream=True, timeout=300)
                 response.raise_for_status()
+                
+                total_size = int(response.headers.get('content-length', 0))
+                downloaded = 0
                 
                 with open(zip_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
+                        downloaded += len(chunk)
+                        if total_size > 0:
+                            print(self._progress_bar(downloaded, total_size), end='', flush=True)
+                print()
                 
                 extract_dir = Path(tmpdir) / "extracted"
                 with zipfile.ZipFile(zip_path, 'r') as zf:
@@ -440,14 +456,23 @@ class DataAcquisition:
                 # Fall back to all PDFs if naming pattern doesn't match
                 pdf_files = [f for f in afd_dir.iterdir() if f.suffix.lower() == '.pdf']
             
+            print("  Parsing JASU from PDFs...")
             jasu_airports = set()
             
             # Parallel processing for speed
             with ThreadPoolExecutor() as executor:
                 futures = {executor.submit(process_pdf, pdf): pdf for pdf in pdf_files}
+                completed = 0
+                total = len(pdf_files)
                 for future in as_completed(futures):
                     result = future.result()
                     jasu_airports.update(result)
+                    completed += 1
+                    pct = int(100 * completed / total)
+                    bar_len = 50
+                    filled = int(bar_len * completed / total)
+                    print(f"\r  [{'=' * filled}{' ' * (bar_len - filled)}] {pct}%", end='', flush=True)
+            print()
             
             # Save to CSV
             jasu_path = self.data_dir / "jasu_data.csv"
@@ -470,6 +495,7 @@ class DataAcquisition:
         results = {}
         
         # PHASE 1: Parallel downloads for small/fast API calls
+        print("Fetching flight data, comments, and fuel...")
         parallel_tasks = {
             'flights': self.download_flights,
             'comments': self.download_comments,
@@ -486,7 +512,10 @@ class DataAcquisition:
                     results[name] = False
         
         # PHASE 2: Large sequential downloads
+        print("Fetching FAA airport/runway data...")
         results['nasr'] = self.download_nasr(force=force)
+        
+        print("Fetching FAA Chart Supplement...")
         results['dcs'] = self.download_dcs(force=force)
         
         # PHASE 3: Parse JASU (depends on DCS)
