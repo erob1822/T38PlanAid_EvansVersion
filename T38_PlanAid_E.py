@@ -79,6 +79,15 @@ def main():
     # Step 0: Initialize configuration
     print("Initializing T-38 PlanAid configuration...")
     cfg = AppConfig()
+    
+    # Delete DATA folder to ensure fresh data every run
+    import shutil
+    if cfg.data_folder.exists():
+        print(f"  Deleting old data folder: {cfg.data_folder}")
+        shutil.rmtree(cfg.data_folder)
+    cfg.data_folder.mkdir(parents=True, exist_ok=True)
+    cfg.apt_data_dir.mkdir(parents=True, exist_ok=True)
+    
     print(f"  Data folder: {cfg.data_folder}")
     print(f"  Output folder: {cfg.output_folder}")
     print(f"  Timestamp: {cfg.run_timestamp}")
