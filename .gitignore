@@ -28,3 +28,18 @@ Alecs Code/Data_Downloader.py
 Alecs Code/API_Scraper.py
 __pycache__/Data_Acquisition.cpython-314.pyc
 __pycache__/KML_Generator.cpython-314.pyc
+T38_PlanAid.spec
+build/T38_PlanAid/Analysis-00.toc
+build/T38_PlanAid/base_library.zip
+build/T38_PlanAid/EXE-00.toc
+build/T38_PlanAid/PKG-00.toc
+build/T38_PlanAid/PYZ-00.pyz
+build/T38_PlanAid/PYZ-00.toc
+build/T38_PlanAid/T38_PlanAid.pkg
+build/T38_PlanAid/warn-T38_PlanAid.txt
+build/T38_PlanAid/xref-T38_PlanAid.html
+build/T38_PlanAid/localpycs/pyimod01_archive.pyc
+build/T38_PlanAid/localpycs/pyimod02_importers.pyc
+build/T38_PlanAid/localpycs/pyimod03_ctypes.pyc
+build/T38_PlanAid/localpycs/pyimod04_pywin32.pyc
+build/T38_PlanAid/localpycs/struct.pyc

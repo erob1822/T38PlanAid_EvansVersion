@@ -131,7 +131,6 @@ def load_reference_sets() -> Tuple[Set[str], Set[str]]:
         jasu_set = set(pd.read_csv(jasu_path)['ICAO'].dropna())
     else:
         jasu_set = set()
-        print("WARNING: jasu_data.csv not found - JASU data will be empty")
     
     return fuel_set, jasu_set
 
@@ -399,8 +398,6 @@ def run(cfg=None) -> Dict[str, Dict]:
     Returns:
         master_dict for potential further processing
     """
-    print("Running KML_Generator.py...")
-    
     # Extract config values or use defaults
     if cfg is not None:
         wb_path = str(cfg.master_excel_path) if hasattr(cfg, 'master_excel_path') else 'wb_list.xlsx'
@@ -412,31 +409,21 @@ def run(cfg=None) -> Dict[str, Dict]:
         data_path = DATA
     
     # Load all data sources
-    print("  Loading runway data...")
     apt, rwy_lookup = load_runway_data()
-    
-    print("  Loading fuel and JASU data...")
     fuel_set, jasu_set = load_reference_sets()
-    
-    print("  Loading wb_list.xlsx...")
     wb = load_wb_list(wb_path)
     
     # Build master dictionary
-    print("  Building master dictionary...")
     master_dict = build_master_dict(apt, rwy_lookup, fuel_set, jasu_set, wb)
     
     # Save master dict to Excel
     pd.DataFrame.from_dict(master_dict, orient='index').to_excel('T38_masterdict.xlsx')
     
     # Generate KML
-    print("  Generating KML...")
     date_str = get_date_string()
     num_airports = generate_kml(master_dict, wb, date_str, version)
     
-    print(f"\nKML file generated!")
-    print(f"  - T38 Apts {date_str}.kml ({num_airports} airports)")
-    print(f"  - T38_Airports.txt")
-    print(f"  - T38_masterdict.xlsx ({len(master_dict)} total airports)")
+    print("KML file generated!")
     
     return master_dict
 

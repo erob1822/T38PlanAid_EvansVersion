@@ -76,33 +76,23 @@ class AppConfig:
 def main():
     """Main entry point - orchestrates all T-38 PlanAid scripts."""
     
-    # Step 0: Initialize configuration
-    print("Initializing T-38 PlanAid configuration...")
+    # Initialize configuration
     cfg = AppConfig()
     
     # Delete DATA folder to ensure fresh data every run
     import shutil
     if cfg.data_folder.exists():
-        print(f"  Deleting old data folder: {cfg.data_folder}")
         shutil.rmtree(cfg.data_folder)
     cfg.data_folder.mkdir(parents=True, exist_ok=True)
     cfg.apt_data_dir.mkdir(parents=True, exist_ok=True)
     
-    print(f"  Data folder: {cfg.data_folder}")
-    print(f"  Output folder: {cfg.output_folder}")
-    print(f"  Timestamp: {cfg.run_timestamp}")
-    
-    # Step 1: Run Data Acquisition
-    print("\nRunning Data_Acquisition.py...")
+    # Run Data Acquisition
     import Data_Acquisition
     Data_Acquisition.run(cfg)
     
-    # Step 2: Run KML Generator
-    print("\nRunning KML_Generator.py...")
+    # Run KML Generator
     import KML_Generator
     KML_Generator.run(cfg)
-    
-    print("\nScripts executed successfully.")
 
 
 def print_credits():
