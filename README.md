@@ -1,6 +1,10 @@
 # T-38 PlanAid (Evans Edition)
 
-Working parallel version of the T38_Planaid script designed to suggest efficiency improvements. Notably: uses only three scripts instead of five, with about half the lines of code. Also includes a 'build_exe.py' which automatically creates a distribution-ready .exe.
+Parallel version of the T38 planaid with specific changes made to increase efficency/modularity. Goal is to create a working script, but not to replace the main version, more to find edits to suggest. 
+
+Fully functional as of 1/27/2026. 
+
+Notably: uses only three scripts instead of five, with about half the lines of code. Also includes a 'build_exe.py' which automatically creates a distribution-ready .exe.
 
 ## For distribution/easiest .kml generation.
 
