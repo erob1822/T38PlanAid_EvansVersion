@@ -1,0 +1,53 @@
+
+======================================================================
+                     T-38 MISSION BRIEFING SHEET                      
+======================================================================
+Generated: 05 Feb 2026 2049L
+Mission Type: Cross-Country Training
+======================================================================
+FLIGHT ROUTE:
+  Departure: KRND
+  Destination: KPNS
+  Alternate: KMOB
+
+Estimated Distance: 572 NM
+Estimated Flight Time: 1+38 (assuming 350 kts TAS, +0 kt wind component)
+======================================================================
+AIRFIELD: KRND - Randolph Air Force Base
+======================================================================
+COORDINATES: 29.5297, -98.2789
+LONGEST RUNWAY: 8350 ft
+AIR START CART (JASU): AVAILABLE
+FUEL: CONTRACT FUEL AVAILABLE
+RECENT T-38 OPS: 15 Jan 2026
+
+NOTES:
+  Home station. Full T-38 support available.
+
+======================================================================
+AIRFIELD: KPNS - Pensacola Naval Air Station
+======================================================================
+COORDINATES: 30.3533, -87.3189
+LONGEST RUNWAY: 8000 ft
+AIR START CART (JASU): AVAILABLE
+FUEL: CONTRACT FUEL AVAILABLE
+RECENT T-38 OPS: 10 Jan 2026
+
+NOTES:
+  Naval Air Station. Coordinate with base ops prior to arrival.
+
+======================================================================
+AIRFIELD: KMOB - Mobile Regional Airport
+======================================================================
+COORDINATES: 30.6912, -88.2428
+LONGEST RUNWAY: 8626 ft
+AIR START CART (JASU): NOT LISTED - COORDINATE WITH FBO
+FUEL: CONTRACT FUEL AVAILABLE
+
+NOTES:
+  Contact FBO to confirm air start cart availability. Good
+  facilities.
+
+======================================================================
+BRIEFING COMPLETE - Verify all NOTAMs and weather prior to flight
+======================================================================
