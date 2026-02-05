@@ -10,8 +10,9 @@ Purpose: Automate mission brief creation for T-38 cross-country flights
 
 import pandas as pd
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 import textwrap
+import math
 
 
 class BriefingSheet:
@@ -99,23 +100,52 @@ class BriefingSheet:
         return '\n'.join(block_lines) + '\n'
     
     def calculate_flight_times(self, airspeed_kts=350, wind_component=0):
-        """Estimate flight duration between waypoints"""
+        """Estimate flight duration between waypoints using Haversine formula"""
         if self.dep not in self.airport_db or self.dest not in self.airport_db:
-            return "Time calculation unavailable - missing coordinates"
+            return "Time calculation unavailable - missing airport data"
         
-        # Simple great circle approximation
-        dep_lat = float(self.airport_db[self.dep].get('LAT', 0))
-        dep_lon = float(self.airport_db[self.dep].get('LON', 0))
-        dest_lat = float(self.airport_db[self.dest].get('LAT', 0))
-        dest_lon = float(self.airport_db[self.dest].get('LON', 0))
+        # Get coordinates
+        dep_lat = self.airport_db[self.dep].get('LAT')
+        dep_lon = self.airport_db[self.dep].get('LON')
+        dest_lat = self.airport_db[self.dest].get('LAT')
+        dest_lon = self.airport_db[self.dest].get('LON')
         
-        # Rough distance calculation (not precise spherical)
-        lat_diff = abs(dest_lat - dep_lat) * 60  # nautical miles
-        lon_diff = abs(dest_lon - dep_lon) * 60 * 0.7  # rough cosine adjustment
-        distance_nm = (lat_diff**2 + lon_diff**2)**0.5
+        # Validate coordinates exist and are non-zero
+        if not all([pd.notna(x) and x != 0 for x in [dep_lat, dep_lon, dest_lat, dest_lon]]):
+            return "Time calculation unavailable - invalid coordinates"
         
+        # Convert to float
+        dep_lat = float(dep_lat)
+        dep_lon = float(dep_lon)
+        dest_lat = float(dest_lat)
+        dest_lon = float(dest_lon)
+        
+        # Haversine formula for great circle distance
+        # Convert degrees to radians
+        lat1_rad = math.radians(dep_lat)
+        lat2_rad = math.radians(dest_lat)
+        delta_lat = math.radians(dest_lat - dep_lat)
+        delta_lon = math.radians(dest_lon - dep_lon)
+        
+        # Haversine calculation
+        a = (math.sin(delta_lat / 2) ** 2 + 
+             math.cos(lat1_rad) * math.cos(lat2_rad) * 
+             math.sin(delta_lon / 2) ** 2)
+        c = 2 * math.asin(math.sqrt(a))
+        
+        # Earth radius in nautical miles
+        radius_nm = 3440.065
+        distance_nm = radius_nm * c
+        
+        # Calculate groundspeed and flight time
         groundspeed = airspeed_kts + wind_component
-        flight_minutes = (distance_nm / groundspeed) * 60 if groundspeed > 0 else 0
+        
+        if groundspeed <= 0:
+            return (f"Estimated Distance: {distance_nm:.0f} NM\n"
+                   f"Flight time calculation error: groundspeed must be positive "
+                   f"({airspeed_kts} kts TAS with {wind_component:+d} kt wind = {groundspeed} kts GS)")
+        
+        flight_minutes = (distance_nm / groundspeed) * 60
         
         hours = int(flight_minutes // 60)
         minutes = int(flight_minutes % 60)
