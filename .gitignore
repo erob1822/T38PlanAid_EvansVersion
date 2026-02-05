@@ -128,3 +128,4 @@ KML_Output/MissionBrief_*.txt
 KML_Output/T38_masterdict.xlsx
 test_mission_brief.py
 __pycache__/
+MISSION_BRIEF_EXAMPLE.md
