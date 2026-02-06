@@ -6,8 +6,8 @@ This script automates the creation of a standalone Windows executable for the T-
 Features:
 - Installs PyInstaller if not present.
 - Cleans previous build artifacts and distribution folders.
-- Builds a single-file executable from T38_PlanAid_E.py, including all required hidden imports.
-- Copies wb_list.xlsx to the distribution folder to ensure the executable is packaged with the latest data.
+- Builds a single-file executable from T38_PlanAid.py, including all required hidden imports.
+- Copies wb_list.xlsx and the DATA folder to the distribution folder to ensure the executable is packaged with cached data.
 
 Usage:
     python build_exe.py
@@ -83,7 +83,7 @@ def main():
         "--hidden-import=requests",
         "--hidden-import=requests_ntlm",
         "--collect-all", "fitz",        # Collect all PyMuPDF files
-        "T38_PlanAid_E.py"              # Entry point
+        "T38_PlanAid.py"              # Entry point
     ]
 
     print("Building executable...")
@@ -108,6 +108,16 @@ def main():
             print(f"Copied wb_list.xlsx from {wb_list_src} to distribution folder")
         else:
             print(f"Warning: wb_list.xlsx not found in project directory tree.")
+
+        # Copy the DATA folder to the distribution folder (cached data, apt_data, afd, etc.)
+        data_src = script_dir / "DATA"
+        data_dst = distribution_folder / "DATA"
+        if data_src.exists() and data_src.is_dir():
+            shutil.copytree(data_src, data_dst, dirs_exist_ok=True)
+            print(f"Copied DATA folder to distribution folder")
+        else:
+            print(f"Warning: DATA folder not found in project directory.")
+
         print(f"\nBuild successful!")
         print(f"Executable: {exe_path.absolute()}")
         print(f"\nDistribution folder ready: {distribution_folder.absolute()}")

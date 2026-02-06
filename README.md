@@ -26,7 +26,7 @@ Zip and distribute that folder. Pilots just double-click the exe and get a .kml 
 
 ```bash
 pip install -r requirements.txt
-python T38_PlanAid_E.py
+python T38_PlanAid.py
 ```
 
 Output: `T38 Apts {date}.kml` - usable in foreflight.
@@ -35,7 +35,7 @@ Output: `T38 Apts {date}.kml` - usable in foreflight.
 
 | File | Purpose |
 |------|---------|
-| `T38_PlanAid_E.py` | Master script - run this. Contains all config (URLs, version, paths) |
+| `T38_PlanAid.py` | Master script - run this. Contains all config (URLs, version, paths) |
 | `Data_Acquisition.py` | Downloads data from AOD, FAA, DLA APIs |
 | `KML_Generator.py` | Builds airport database and generates KML |
 | `wb_list.xlsx` | Blacklist, whitelist, categories, comments, recent landings |
@@ -44,11 +44,11 @@ Output: `T38 Apts {date}.kml` - usable in foreflight.
 
 | To change... | Edit this |
 |--------------|-----------|
-| Version string on KML | `T38_PlanAid_E.py` → `AppConfig.version` |
+| Version string on KML | `T38_PlanAid.py` → `AppConfig.version` |
 | Minimum runway length | `KML_Generator.py` → search `# MODIFY: runway threshold` |
 | Pin colors/logic | `KML_Generator.py` → search `# MODIFY: pin color` |
 | Add/remove airports | `wb_list.xlsx` → BLACKLIST, WHITELIST, CAT_ONE/TWO/THREE columns |
-| API URLs | `T38_PlanAid_E.py` → `AppConfig` class variables |
+| API URLs | `T38_PlanAid.py` → `AppConfig` class variables |
 
 ## Pin Colors
 

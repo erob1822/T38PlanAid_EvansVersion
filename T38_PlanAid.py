@@ -1,5 +1,5 @@
 """
-T38_PlanAid_E.py - Master Orchestrator for T-38 PlanAid Application
+T38_PlanAid.py - Master Orchestrator for T-38 PlanAid Application
 
 This script serves as the main entry point for the T-38 PlanAid workflow. It:
 - Defines the AppConfig dataclass, which holds all configuration and URL endpoints for data acquisition and KML generation.
@@ -116,8 +116,18 @@ def main():
     logger.info("T-38 PlanAid - Main Execution")
     logger.info("=" * 60)
     try:
+        # Clean up working directories while preserving cache
+        # Keep Cache folder and cache JSON to preserve Alec's cycle caching
         if cfg.data_folder.exists():
-            shutil.rmtree(cfg.data_folder)
+            cache_folder = cfg.data_folder / 'Cache'
+            cache_json = cfg.data_folder / 'data_download_cache.json'
+            # Delete non-cache items
+            for item in cfg.data_folder.iterdir():
+                if item != cache_folder and item != cache_json:
+                    if item.is_dir():
+                        shutil.rmtree(item)
+                    else:
+                        item.unlink()
         cfg.data_folder.mkdir(parents=True, exist_ok=True)
         cfg.apt_data_dir.mkdir(parents=True, exist_ok=True)
         cfg.output_folder.mkdir(parents=True, exist_ok=True)
@@ -163,6 +173,7 @@ NASA = """
     ╚═╝     ╚══════╝╚═╝       ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝
 
 -The Navy Rowers ( Adrien & Nick ) ( & Evan )
+-Alec
 
 ███████╗███████╗███╗   ███╗██████╗ ███████╗██████╗     ███████╗ ██╗
 ██╔════╝██╔════╝████╗ ████║██╔══██╗██╔════╝██╔══██╗    ██╔════╝ ╚═╝   
