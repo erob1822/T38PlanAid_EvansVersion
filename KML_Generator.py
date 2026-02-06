@@ -95,7 +95,7 @@ def get_date_string() -> str:
 
 def load_runway_data():
     """
-    Load and merge runway data from FAA NFDC CSVs.
+    Load and merge runway data from NASR CSVs.
     
     Returns:
         Tuple of (airport DataFrame, dict mapping IATA code to runway data)
