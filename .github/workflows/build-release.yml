@@ -105,14 +105,15 @@ jobs:
         id: version
         shell: bash
         run: |
-          # Read base version from source (e.g. "Version 3.0" -> "Version3.0")
-          BASE=$(python3 << 'PYEOF'
+          # Write a temp script to avoid shell escaping & encoding issues
+          cat > _get_version.py << 'PYEOF'
           import re, pathlib
-          text = pathlib.Path('T38_PlanAid.py').read_text()
+          text = pathlib.Path('T38_PlanAid.py').read_text(encoding='utf-8')
           m = re.search(r"version:\s+ClassVar\[str\]\s*=\s*'([^']+)'", text)
           print(m.group(1).replace(' ', '') if m else 'v0.0')
           PYEOF
-          )
+          BASE=$(python _get_version.py)
+          rm -f _get_version.py
           echo "Detected base version: $BASE"
           # Find highest existing patch for this base version
           git fetch --tags
