@@ -131,3 +131,26 @@ Install via `pip install -r requirements.txt`. Key packages: `pandas`, `simplekm
 - Dan Cochran
 - Luke Delaney
 - Jonny Kim
+
+## Automated Release Builds (GitHub Actions)
+
+The repo includes a GitHub Actions workflow (`.github/workflows/build-release.yml`) that automatically builds standalone executables for **both Windows and Mac** whenever a new release is published.
+
+### How it works
+
+1. A developer pushes code to `main` and creates a new **Release** on GitHub (Releases → Draft a new release → choose a tag like `v3.0` → Publish)
+2. GitHub Actions spins up a **Windows** runner and a **macOS** runner in the cloud
+3. Each runner installs Python, all dependencies, and PyInstaller, then builds the executable for its OS
+4. The executables are packaged into ZIP files (`T38-PlanAid-Windows.zip` and `T38-PlanAid-Mac.zip`) alongside `wb_list.xlsx` and the `DATA/` folder
+5. Both ZIPs are automatically attached to the Release as downloadable assets
+
+### For users
+
+Go to [Releases](https://github.com/erob1822/T38PlanAid_EvansVersion/releases), download the ZIP for your OS, extract it, and run the executable. No Python required.
+
+- **Windows**: May show a SmartScreen warning — right-click the download → Keep → Keep anyway
+- **Mac**: May show an "unidentified developer" warning — right-click the app → Open → Open again (one-time step)
+
+### Manual trigger
+
+You can also trigger a build manually without creating a release: go to the repo's **Actions** tab → **Build Release** → **Run workflow**. This is useful for testing the build without publishing a release.
