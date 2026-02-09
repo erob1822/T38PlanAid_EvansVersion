@@ -1,4 +1,4 @@
-# T-38 PlanAid (Evans Edition)
+# T-38 Planning Aid
 
 ## BLUF
 
