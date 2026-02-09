@@ -179,7 +179,10 @@ def load_wb_list(wb_path: str = 'wb_list.xlsx') -> dict[str, any]:
     return {
         'landed': landed,
         'comments': comments,
-        'black_set': set(wb['BLACKLIST'].dropna()),
+        'black_dict': {
+            r['BLACKLIST']: str(r['Blacklist Justification']) if pd.notna(r.get('Blacklist Justification')) else ''
+            for _, r in wb.dropna(subset=['BLACKLIST']).iterrows()
+        },
         'white_set': set(wb['WHITELIST'].dropna()),
         'cat1': set(wb['CAT_ONE'].dropna()),
         'cat2': set(wb['CAT_TWO'].dropna()),
@@ -251,7 +254,8 @@ def build_master_dict(apt: pd.DataFrame, rwy_lookup: dict, fuel_set: set,
             "Date Landed": rec_info[0] or "",
             "Front Seat": rec_info[1] or "",
             "Back Seat": rec_info[2] or "",
-            "Black List": icao in wb['black_set'],
+            "Black List": icao in wb['black_dict'],
+            "Blacklist Reason": wb['black_dict'].get(icao, ''),
             "White List": icao in wb['white_set'],
             "Latitude": row.LAT_DECIMAL,
             "Longitude": row.LONG_DECIMAL,
@@ -324,8 +328,10 @@ def generate_kml(master_dict: dict, wb: dict, date_str: str, version: str, exp_s
         
         # Blacklisted airports: red pin with blacklist info (no runway/fuel filter)
         if d['Black List']:
+            bl_reason = f"<br/>Reason: {d['Blacklist Reason']}" if d['Blacklist Reason'] else ''
             desc = (
                 f"{icao} <br/><b>BLACKLISTED - T-38 operations not authorized.</b>"
+                f"{bl_reason}"
                 f"<br/><br/>Longest Landing Distance Available (LDA): {d['Runway Length']}"
                 f"{d['Category']}"
                 f"<br/><br/>Runways with Declared LDAs >7000:{d['Runway Output']}"
@@ -461,8 +467,10 @@ def generate_map(master_dict: dict, date_str: str, exp_str: str = "") -> Path:
             popup_html = (
                 f"<b>{icao}</b><br/>"
                 f"<span style='color:red'><b>BLACKLISTED - T-38 operations not authorized.</b></span><br/>"
-                f"LDA: {d['Runway Length']} ft<br/>"
             )
+            if d['Blacklist Reason']:
+                popup_html += f"<span style='color:red'>Reason: {d['Blacklist Reason']}</span><br/>"
+            popup_html += f"LDA: {d['Runway Length']} ft<br/>"
             if comment:
                 popup_html += f"Comments: {comment}<br/>"
             if d['Category']:
