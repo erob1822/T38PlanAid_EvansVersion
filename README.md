@@ -18,6 +18,8 @@ This is an updated version of the main T38 PlanAid with changes made to increase
 
 ## Getting the Planning Aid (Easiest Way)
 
+Note: This method probably won't work. Windows does not like running unsigned .exe files.
+
 1. Go to the [latest release](https://github.com/erob1822/T38_Planning_Aid/releases/latest) and download the ZIP for your operating system:
    - **Windows**: [**T38-PlanAid-Windows.zip**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T38-PlanAid-Windows.zip)
    - **Mac**: [**T38-PlanAid-Mac.zip**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T38-PlanAid-Mac.zip)
@@ -28,7 +30,7 @@ No install or Python required. On first run the app downloads all data automatic
 
 > **Mac users:** You may see an "unidentified developer" warning. Right-click the app → **Open** → click **Open** again. This is a one-time step.
 
-If you can't get the download to work, you can clone the repo and run `python build_exe.py` on a computer with Python installed, or just run `python T38_PlanAid.py` directly.
+If you can't get the download to work, you can download the full project zip and run `build_exe.py` on a computer with Python installed, or just run `T38_PlanAid.py` directly.
 
 ## Output
 
