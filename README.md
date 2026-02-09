@@ -16,34 +16,32 @@ This is an updated version of the main T38 PlanAid with changes made to increase
 
 ## To Generate a .KML file for Cross Country Planning
 
-Download this repository as a .zip file and extract the contents. 
+Just double-click `T-38 Planning Aid.exe` — no other files needed. On first run, it extracts `wb_list.xlsx` automatically. To used cached data, the app will have to run in the same folder as a preexisting `T38 Planning Aid` folder. This will save about a minute if current data already exists from a previous run.
 
-Either double click `T38_PlanAid.exe` or open a command window and type:
+All output goes into a `T38 Planning Aid/` folder created next to the exe:
+- `T38 Planning Aid/KML_Output/` — your `.kml` files
+- `T38 Planning Aid/DATA/` — cached FAA data
+- `T38 Planning Aid/wb_list.xlsx` — airport lists (editable)
 
-```cmd
-T38_PlanAid.exe
-```
-
-The generated `.kml` file will appear in the `KML_Output/` folder.
+The KML output path is printed at the end of each run. Open the `.kml` in ForeFlight, Google Earth, or KMZViewer.com.
 
 ## For Distribution
 
-To create a standalone `.exe` for distribution (after downloading and extracting the zip file), open a terminal prompt, navigate to the correct folder and type:
+To build a standalone `.exe` for distribution, open a terminal in the project folder and run:
 
 ```cmd
 python build_exe.py
 ```
 
-Or, with python installed, just double clink on build_exe.py.
+Or, with Python installed, just double-click `build_exe.py`.
 
 This creates the folder `T38 PlanAid Distribution/` containing:
-- `T38_PlanAid.exe` - standalone executable
-- `wb_list.xlsx` - airport lists (blacklist, whitelist, categories, comments)
-- `Data` - A folder for cached FAA data from the last time the script ran.
+- `T-38 Planning Aid.exe` — standalone executable (can be distributed on its own)
+- `T38 Planning Aid/` — pre-populated with cached data and `wb_list.xlsx`
 
-KML output files are created in `KML_Output/` on first run, and can be opened in foreflight, google earth, or KMZViewer.com
+The exe bundles `wb_list.xlsx` internally and extracts it on first run if not present. You can distribute just the `.exe` by itself — or include the `T38 Planning Aid/` folder for faster first-run performance (skips re-downloading cached data).
 
-Zip and distribute the `T38 PlanAid Distribution/` folder. Pilots just double-click the exe and get a .kml file output, which will be up to date with the current publications every time it runs.
+> **Note:** To use cached data, the `T38 Planning Aid/` folder (containing `DATA/`) must be next to the `.exe`. If the exe is moved without the folder, it will re-download everything on the next run.
 
 ## Quick Start (For Development)
 
@@ -52,7 +50,7 @@ pip install -r requirements.txt
 python T38_PlanAid.py
 ```
 
-Output: `T38 Apts {date}.kml` - usable in foreflight.
+Output: `T38 Planning Aid/KML_Output/T38 Apts {date}.kml` — usable in ForeFlight.
 
 ## Files
 
@@ -88,7 +86,7 @@ See `requirements.txt`. Key packages: `pandas`, `simplekml`, `requests`, `reques
 
 ## Troubleshooting
 
-- **File Issues**: Ensure `wb_list.xlsx` is present and correctly formatted in the same folder as the executable. Revert to a backup if needed.
+- **File Issues**: `wb_list.xlsx` is auto-extracted on first run. If it gets corrupted, delete it from `T38 Planning Aid/` and the exe will regenerate it. Revert to a backup if you've made custom edits.
 - **URL Changes**: If FAA or DLA URLs change, update the endpoints in `T38_PlanAid.py` → `AppConfig` class variables.
 - **API Issues**: Contact AOD IT if API paths are down or outdated. Update the relevant URL in `T38_PlanAid.py` → `AppConfig`.
 

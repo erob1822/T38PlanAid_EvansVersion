@@ -397,7 +397,7 @@ def run(cfg):
     print("Loading airport and runway data...")
     apt, rwy_lookup = load_runway_data()
     fuel_set, jasu_set = load_reference_sets()
-    wb = load_wb_list(APP_DIR / 'wb_list.xlsx')
+    wb = load_wb_list(cfg.work_dir / 'wb_list.xlsx')
     
     # Build master dictionary
     print("Building master dictionary...")

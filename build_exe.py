@@ -66,15 +66,17 @@ def main():
             shutil.rmtree(folder_path)
 
     # Remove old spec file if present
-    spec_file = script_dir / 'T38_PlanAid.spec'
-    if spec_file.exists():
-        spec_file.unlink()
+    for spec_name in ['T38_PlanAid.spec', 'T-38 Planning Aid.spec']:
+        spec_file = script_dir / spec_name
+        if spec_file.exists():
+            spec_file.unlink()
 
     # Build the executable with all required hidden imports
     cmd = [
         sys.executable, "-m", "PyInstaller",
         "--onefile",                    # Single .exe file
-        "--name", "T38_PlanAid",        # Output name
+        "--name", "T-38 Planning Aid",  # Output name
+        "--icon", "RPLLogo.ico",        # Application icon
         "--distpath", "T38 PlanAid Distribution",  # Output folder
         "--hidden-import=fitz",         # PyMuPDF
         "--hidden-import=pandas",
@@ -86,6 +88,7 @@ def main():
         "--hidden-import=sspilib",
         "--collect-all", "fitz",        # Collect all PyMuPDF files
         "--collect-all", "sspilib",     # Collect SSPI native bindings for NTLM auth
+        "--add-data", "wb_list.xlsx;.", # Bundle wb_list.xlsx inside exe (extracted on first run)
         "T38_PlanAid.py"              # Entry point
     ]
 
@@ -98,31 +101,33 @@ def main():
         # Always resolve paths relative to this script's directory
         script_dir = Path(__file__).resolve().parent
         distribution_folder = script_dir / "T38 PlanAid Distribution"
-        exe_path = distribution_folder / "T38_PlanAid.exe"
+        exe_path = distribution_folder / "T-38 Planning Aid.exe"
+        work_folder = distribution_folder / "T38 Planning Aid"
+        work_folder.mkdir(parents=True, exist_ok=True)
 
         # Find wb_list.xlsx anywhere in the project (root or subfolders)
         wb_list_src = None
         for p in script_dir.rglob('wb_list.xlsx'):
             wb_list_src = p
             break
-        wb_list_dst = distribution_folder / "wb_list.xlsx"
+        wb_list_dst = work_folder / "wb_list.xlsx"
         if wb_list_src and wb_list_src.exists():
             shutil.copy2(wb_list_src, wb_list_dst)
-            print(f"Copied wb_list.xlsx from {wb_list_src} to distribution folder")
+            print(f"Copied wb_list.xlsx from {wb_list_src} to T38 Planning Aid folder")
         else:
             print(f"Warning: wb_list.xlsx not found in project directory tree.")
 
-        # Copy the DATA folder to the distribution folder (cached data, apt_data, afd, etc.)
+        # Copy the DATA folder to the work folder (cached data, apt_data, afd, etc.)
         data_src = script_dir / "DATA"
-        data_dst = distribution_folder / "DATA"
+        data_dst = work_folder / "DATA"
         if data_src.exists() and data_src.is_dir():
             shutil.copytree(data_src, data_dst, dirs_exist_ok=True)
-            print(f"Copied DATA folder to distribution folder")
+            print(f"Copied DATA folder to T38 Planning Aid folder")
         else:
             print(f"Warning: DATA folder not found in project directory.")
 
         # Copy exe to the project root so it's visible when unzipping
-        exe_root_copy = script_dir / "T38_PlanAid.exe"
+        exe_root_copy = script_dir / "T-38 Planning Aid.exe"
         if exe_path.exists():
             shutil.copy2(exe_path, exe_root_copy)
             print(f"Copied T38_PlanAid.exe to project root: {exe_root_copy.absolute()}")
@@ -131,9 +136,10 @@ def main():
         print(f"Executable: {exe_path.absolute()}")
         print(f"\nDistribution folder ready: {distribution_folder.absolute()}")
         print(f"Contents:")
-        for item in distribution_folder.iterdir():
-            print(f"  - {item.name}")
-        print(f"  (KML_Output folder will be created on first run)")
+        for item in sorted(distribution_folder.rglob('*')):
+            rel = item.relative_to(distribution_folder)
+            print(f"  - {rel}")
+        print(f"  (KML_Output folder will be created on first run inside 'T38 Planning Aid')")
     else:
         print(f"\nBuild failed with code {result.returncode}")
         sys.exit(1)

@@ -91,10 +91,11 @@ class AppConfig:
     dla_fuel_check: ClassVar[str] = 'https://cis.energy.dla.mil/ipcis/Ipcis'
     dla_fuel_download: ClassVar[str] = 'https://cis.energy.dla.mil/ipcis/Download?searchValue=UNITED%20STATES&field=REGION&recordType=100'
 
-    # Instance fields - paths (relative to APP_DIR so exe output lands next to exe)
+    # Instance fields - paths (all output goes into 'T38 Planning Aid' subfolder)
     app_dir: Path = field(default_factory=lambda: APP_DIR)
-    data_folder: Path = field(default_factory=lambda: APP_DIR / 'DATA')
-    output_folder: Path = field(default_factory=lambda: APP_DIR / 'KML_Output')
+    work_dir: Path = field(default_factory=lambda: APP_DIR / 'T38 Planning Aid')
+    data_folder: Path = field(default_factory=lambda: APP_DIR / 'T38 Planning Aid' / 'DATA')
+    output_folder: Path = field(default_factory=lambda: APP_DIR / 'T38 Planning Aid' / 'KML_Output')
 
     def __post_init__(self):
         """Compute derived paths."""
@@ -115,6 +116,39 @@ def main():
     logger.info("=" * 60)
     logger.info("T-38 PlanAid - Main Execution")
     logger.info("=" * 60)
+
+    # Auto-extract bundled wb_list.xlsx on first run (standalone exe support)
+    wb_dest = cfg.work_dir / 'wb_list.xlsx'
+    if not wb_dest.exists() and getattr(sys, 'frozen', False):
+        cfg.work_dir.mkdir(parents=True, exist_ok=True)
+        bundled = Path(sys._MEIPASS) / 'wb_list.xlsx'
+        if bundled.exists():
+            shutil.copy2(bundled, wb_dest)
+            logger.info(f"Extracted bundled wb_list.xlsx to {wb_dest}")
+        else:
+            logger.warning("wb_list.xlsx not found in bundled data or alongside exe.")
+
+    # Migrate old cache from DATA/ to T38 Planning Aid/DATA/ if needed
+    old_data = cfg.app_dir / 'DATA'
+    if old_data.exists() and old_data != cfg.data_folder:
+        old_cache = old_data / 'Cache'
+        old_json = old_data / 'data_download_cache.json'
+        if old_cache.exists() and not (cfg.data_folder / 'Cache').exists():
+            cfg.data_folder.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(old_cache, cfg.data_folder / 'Cache')
+            logger.info("Migrated cache from old DATA/ folder.")
+        if old_json.exists() and not (cfg.data_folder / 'data_download_cache.json').exists():
+            cfg.data_folder.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(old_json, cfg.data_folder / 'data_download_cache.json')
+            logger.info("Migrated cache JSON from old DATA/ folder.")
+    # Also migrate wb_list.xlsx from old location
+    old_wb = cfg.app_dir / 'wb_list.xlsx'
+    wb_dest = cfg.work_dir / 'wb_list.xlsx'
+    if old_wb.exists() and not wb_dest.exists():
+        cfg.work_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(old_wb, wb_dest)
+        logger.info("Migrated wb_list.xlsx from old location.")
+
     try:
         # Clean up working directories while preserving cache
         # Keep Cache folder and cache JSON to preserve Alec's cycle caching
@@ -188,11 +222,21 @@ NASA = """
 
 
 if __name__ == "__main__":
+    cfg = AppConfig()
     exit_code = main()
     # Print ASCII art with delay
     lines = NASA.strip().split('\n')
     for line in lines:
         print(line)
         time.sleep(0.1)
+
+    # Show user where their KML file is (last thing they see)
+    kml_files = list(cfg.output_folder.glob('*.kml'))
+    if kml_files:
+        latest_kml = max(kml_files, key=lambda f: f.stat().st_mtime)
+        print(f"\n{'=' * 60}")
+        print(f"KML output: {latest_kml.resolve()}")
+        print(f"{'=' * 60}")
+
     input()
 

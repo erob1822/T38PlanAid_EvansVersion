@@ -618,7 +618,7 @@ def parse_jasu(cfg):
 def update_wb_list(cfg):
     """Update wb_list.xlsx with recent data."""
     import openpyxl
-    wb_path = cfg.app_dir / 'wb_list.xlsx'
+    wb_path = cfg.work_dir / 'wb_list.xlsx'
     
     if not wb_path.exists():
         logger.error("wb_list.xlsx not found.")
@@ -683,11 +683,7 @@ def update_wb_list(cfg):
 def run(cfg):
     """Main execution function called by T38_PlanAid.py."""
     
-    # 1. Safety Check for Excel
-    wb_path = cfg.app_dir / 'wb_list.xlsx'
-    input(f"Please ensure '{wb_path.name}' is closed. Press Enter to proceed...")
-
-    # 2. Run Cycle Cache Manager (Downloads & Deploys)
+    # 1. Run Cycle Cache Manager (Downloads & Deploys)
     cache_mgr = CycleCache(cfg)
     cache_mgr.run_all()
     
