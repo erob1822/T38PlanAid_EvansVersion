@@ -19,8 +19,8 @@ This is an updated version of the main T38 PlanAid with changes made to increase
 ## Getting the Planning Aid (Easiest Way)
 
 1. Download the executable for your operating system:
-   - **Windows**: [**T-38 Planning Aid.exe**](https://github.com/erob1822/T38PlanAid_EvansVersion/releases/latest/download/T-38.Planning.Aid.exe)
-   - **Mac**: [**T-38 Planning Aid (Mac)**](https://github.com/erob1822/T38PlanAid_EvansVersion/releases/latest/download/T-38.Planning.Aid.%28Mac%29)
+   - **Windows**: [**T-38 Planning Aid.exe**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T-38.Planning.Aid.exe)
+   - **Mac**: [**T-38 Planning Aid (Mac)**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T-38.Planning.Aid.%28Mac%29)
 2. Place it in a folder of your choice and run it
 
 No install or Python required. On first run the app downloads all data automatically and creates a `T38 Planning Aid/` folder next to itself. Subsequent runs reuse cached data if the folder is kept alongside the executable.
@@ -53,8 +53,8 @@ T38 Planning Aid/
 ## For Development
 
 ```cmd
-git clone https://github.com/erob1822/T38PlanAid_EvansVersion.git
-cd T38PlanAid_EvansVersion
+git clone https://github.com/erob1822/T38_Planning_Aid.git
+cd T38_Planning_Aid
 pip install -r requirements.txt
 python T38_PlanAid.py
 ```
@@ -157,7 +157,7 @@ The repo includes a GitHub Actions workflow (`.github/workflows/build-release.ym
 
 ### For users
 
-Go to [Releases](https://github.com/erob1822/T38PlanAid_EvansVersion/releases), download the ZIP for your OS, extract it, and run the executable. No Python required.
+Go to [Releases](https://github.com/erob1822/T38_Planning_Aid/releases), download the executable for your OS, and run it. No Python required.
 
 - **Windows**: May show a SmartScreen warning — right-click the download → Keep → Keep anyway
 - **Mac**: May show an "unidentified developer" warning — right-click the app → Open → Open again (one-time step)
