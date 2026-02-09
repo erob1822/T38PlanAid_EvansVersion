@@ -23,7 +23,6 @@ permissions:
 
 jobs:
   build:
-    name: Build ${{ matrix.os == 'windows-latest' && 'Windows' || 'Mac' }}
     strategy:
       matrix:
         include:
