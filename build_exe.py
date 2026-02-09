@@ -35,22 +35,22 @@ def main():
     if requirements_file.exists():
         print("Installing required packages from requirements.txt...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", str(requirements_file)])
+
+        # Try to import each dependency and install if missing
+        import importlib
+        with open(requirements_file) as reqf:
+            for line in reqf:
+                pkg = line.strip()
+                if not pkg or pkg.startswith('#'):
+                    continue
+                mod = pkg.split('==')[0].replace('-', '_')
+                try:
+                    importlib.import_module(mod)
+                except ImportError:
+                    print(f"Installing missing dependency: {pkg}")
+                    subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
     else:
         print("Warning: requirements.txt not found. Skipping requirements installation.")
-
-    # Try to import each dependency and install if missing
-    import importlib
-    with open(requirements_file) as reqf:
-        for line in reqf:
-            pkg = line.strip()
-            if not pkg or pkg.startswith('#'):
-                continue
-            mod = pkg.split('==')[0].replace('-', '_')
-            try:
-                importlib.import_module(mod)
-            except ImportError:
-                print(f"Installing missing dependency: {pkg}")
-                subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
 
     # Ensure PyInstaller is installed
     try:

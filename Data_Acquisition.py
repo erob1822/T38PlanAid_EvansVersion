@@ -432,19 +432,32 @@ def download_and_extract_dcs(source):
     _download_and_extract_zip(source, "DCS")
 
 def deploy_dcs_and_parse_jasu(source):
-    """Copy PDFs to DATA/afd and run JASU parser."""
+    """Copy PDFs to DATA/afd and run JASU parser (or use cached jasu_data.csv)."""
     afd_dir = source.config.data_folder / "afd"
     afd_dir.mkdir(parents=True, exist_ok=True)
     
-    # 1. Copy PDFs
-    logger.info("Deploying AFD PDFs...")
-    pdf_files = list(source.download_subdir.rglob("*.pdf"))
-    for pdf in pdf_files:
-        shutil.copy2(pdf, afd_dir / pdf.name)
+    cached_jasu = source.download_subdir / "jasu_data.csv"
+    jasu_dst = source.config.data_folder / "jasu_data.csv"
     
-    # 2. Parse JASU (Logic from erob1822)
-    logger.info("Parsing PDFs for JASU data...")
-    parse_jasu(source.config)
+    if cached_jasu.exists():
+        # JASU already parsed for this cycle — just copy it
+        logger.info("[dcs] JASU cache hit — skipping PDF parsing.")
+        shutil.copy2(cached_jasu, jasu_dst)
+    else:
+        # 1. Copy PDFs
+        logger.info("Deploying AFD PDFs...")
+        pdf_files = list(source.download_subdir.rglob("*.pdf"))
+        for pdf in pdf_files:
+            shutil.copy2(pdf, afd_dir / pdf.name)
+        
+        # 2. Parse JASU
+        logger.info("Parsing PDFs for JASU data...")
+        parse_jasu(source.config)
+        
+        # 3. Cache the result alongside the DCS download for next run
+        if jasu_dst.exists():
+            shutil.copy2(jasu_dst, cached_jasu)
+            logger.info("[dcs] Cached jasu_data.csv for future runs.")
 
 # --- HELPER: FAA GENERIC ---
 def _get_faa_cycle_generic(source, api_url):

@@ -303,17 +303,16 @@ def generate_kml(master_dict: Dict, wb: Dict, date_str: str, version: str) -> in
         if not (isinstance(icao, str) and icao.startswith('K') and len(icao) == 4):
             continue
         
-        # MODIFY: pin color logic - blue/yellow/green assignment based on JASU availability and recent ops
-        has_issue = not d['Recently Landed'] or d['Issues with Recently Landed']
-        
-        if d['JASU'] and has_issue:
+        # MODIFY: pin color logic - blue/yellow/green assignment based on JASU availability or recent ops/whitelist
+        recently_landed = d['Recently Landed'] and not d['Issues with Recently Landed']
+        whitelisted = d['White List']
+
+        if recently_landed or whitelisted:
+            pin, style = 'green', styles['prev']    # Known good or explicitly whitelisted
+        elif d['JASU']:
             pin, style = 'blue', styles['go']       # JASU listed, no recent ops
-        elif not d['JASU'] and has_issue:
-            pin, style = 'yellow', styles['nogo']   # No JASU, call FBO
-        elif d['Recently Landed'] or d['White List']:
-            pin, style = 'green', styles['prev']    # Recently landed, known good
         else:
-            continue
+            pin, style = 'yellow', styles['nogo']   # No JASU, call FBO
         
         # Override style for category airports (red pins)
         if "Category 1" in d['Category']:
