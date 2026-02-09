@@ -20,7 +20,7 @@ Data Sources (from Data_Acquisition.py):
 
 Output:
     - T38_masterdict.xlsx: Full airport database with all computed fields
-    - T38 Apts {date}.kml: Color-coded airport pins for Google Earth
+    - T38 Apts {date} EXPIRES {expiration}.kml: Color-coded airport pins for Google Earth
     - T38_Airports.txt: Tab-delimited summary for quick reference
 
 Pin Color Logic:
@@ -36,10 +36,12 @@ Usage (from master script):
 """
 
 # Standard library imports
-from datetime import datetime
+import json
+from datetime import datetime, timedelta
 from pathlib import Path
 
 # Third-party imports
+import folium
 import pandas as pd
 import simplekml
 from simplekml import Style
@@ -91,6 +93,23 @@ def get_date_string() -> str:
             except (ValueError, IndexError):
                 pass
     return datetime.now().strftime("%d %b %Y")
+
+
+def get_expiration_string() -> str:
+    """Compute expiration date from NASR 28-day cycle date in the download cache."""
+    cache_path = DATA / "data_download_cache.json"
+    if cache_path.exists():
+        try:
+            with open(cache_path, 'r') as f:
+                cache = json.load(f)
+            nasr_date = cache.get('sources', {}).get('nasr', {}).get('downloaded_cycle_date')
+            if nasr_date:
+                effective = datetime.strptime(nasr_date, "%Y-%m-%d")
+                expiration = effective + timedelta(days=28)
+                return expiration.strftime("%d %b %Y")
+        except Exception:
+            pass
+    return ""
 
 
 def load_runway_data():
@@ -265,7 +284,7 @@ def create_kml_styles() -> Dict[str, Style]:
     return styles
 
 
-def generate_kml(master_dict: Dict, wb: Dict, date_str: str, version: str) -> int:
+def generate_kml(master_dict: Dict, wb: Dict, date_str: str, version: str, exp_str: str = "") -> int:
     """
     Generate KML file with color-coded airport pins.
     
@@ -274,6 +293,7 @@ def generate_kml(master_dict: Dict, wb: Dict, date_str: str, version: str) -> in
         wb: Workbook data from load_wb_list()
         date_str: Date string for filename
         version: Version string from cfg
+        exp_str: Expiration date string for filename
     
     Returns:
         Number of airports included in KML
@@ -367,7 +387,8 @@ def generate_kml(master_dict: Dict, wb: Dict, date_str: str, version: str) -> in
         txt_lines.append(f"{icao}\t{txt_color}\t{d['Runway Length']}\t{comment_clean}")
     
     # Save KML to output folder
-    kml_filename = OUTPUT / f"T38 Apts {date_str}.kml"
+    exp_part = f" EXPIRES {exp_str}" if exp_str else ""
+    kml_filename = OUTPUT / f"T38 Apts {date_str}{exp_part}.kml"
     kml_out.save(str(kml_filename))
     
     # Save txt summary to output folder
@@ -377,6 +398,89 @@ def generate_kml(master_dict: Dict, wb: Dict, date_str: str, version: str) -> in
             f.write(line + '\n')
     
     return len(txt_lines)
+
+
+# ── INTERACTIVE MAP ──
+
+# Folium marker color mapping
+_PIN_COLORS = {
+    'green': 'green',
+    'blue': 'blue',
+    'yellow': 'orange',   # folium has no yellow; orange is closest
+}
+
+def generate_map(master_dict: Dict, date_str: str, exp_str: str = "") -> Path:
+    """
+    Generate an interactive HTML map with color-coded airport markers.
+
+    Uses the same filtering and color logic as generate_kml so the two
+    outputs always agree.
+
+    Returns:
+        Path to the saved HTML file.
+    """
+    m = folium.Map(location=[39.0, -98.0], zoom_start=5, tiles='OpenStreetMap')
+
+    for d in master_dict.values():
+        icao = d['ICAO Name']
+
+        # Same exclusion filters as generate_kml
+        if d['OCONUS'] or d['Black List']:
+            continue
+        if d['Runway Length'] < 7000 or not d['Contract Gas']:
+            continue
+        if not (isinstance(icao, str) and icao.startswith('K') and len(icao) == 4):
+            continue
+
+        # Pin color logic (mirrors KML)
+        recently_landed = d['Recently Landed'] and not d['Issues with Recently Landed']
+        whitelisted = d['White List']
+
+        if recently_landed or whitelisted:
+            pin = 'green'
+        elif d['JASU']:
+            pin = 'blue'
+        else:
+            pin = 'yellow'
+
+        # Category overrides
+        if 'Category 1' in d['Category']:
+            color = 'red'
+            icon = 'ban-sign'  # prohibited
+        elif 'Category' in d['Category']:
+            color = 'red'
+            icon = 'warning-sign'
+        else:
+            color = _PIN_COLORS.get(pin, 'blue')
+            icon = 'plane'
+
+        # Popup content
+        comment = str(d['Comments']).replace('<br/>', ' ').replace('nan', '').strip()
+        popup_html = (
+            f"<b>{icao}</b><br/>"
+            f"LDA: {d['Runway Length']} ft<br/>"
+            f"Fuel: {'Yes' if d['Contract Gas'] else 'No'}<br/>"
+            f"JASU: {'Yes' if d['JASU'] else 'No'}<br/>"
+        )
+        if d['Recently Landed']:
+            popup_html += f"Last landed: {d['Date Landed']}<br/>"
+        if comment:
+            popup_html += f"Comments: {comment}<br/>"
+        if d['Category']:
+            cat_text = d['Category'].replace('<br/>', '').strip()
+            popup_html += f"<span style='color:red'>{cat_text}</span><br/>"
+
+        folium.Marker(
+            location=[d['Latitude'], d['Longitude']],
+            popup=folium.Popup(popup_html, max_width=300),
+            tooltip=f"{icao}  {d['Runway Length']} ft",
+            icon=folium.Icon(color=color, icon=icon, prefix='glyphicon'),
+        ).add_to(m)
+
+    exp_part = f" EXPIRES {exp_str}" if exp_str else ""
+    map_path = OUTPUT / f"T38 Map {date_str}{exp_part}.html"
+    m.save(str(map_path))
+    return map_path
 
 
 # MODULE-LEVEL RUN FUNCTION
@@ -409,9 +513,15 @@ def run(cfg):
     # Generate KML
     print("Generating KML file...")
     date_str = get_date_string()
-    num_airports = generate_kml(master_dict, wb, date_str, cfg.version)
-    
+    exp_str = get_expiration_string()
+    num_airports = generate_kml(master_dict, wb, date_str, cfg.version, exp_str)
     print(f"KML file generated with {num_airports} airports!")
+
+    # Generate interactive HTML map
+    print("Generating interactive map...")
+    map_path = generate_map(master_dict, date_str, exp_str)
+    print(f"Interactive map saved: {map_path}")
+    return map_path
 
 
 # AUTO-RUN ON IMPORT (matches original pattern - comment out if not desired)

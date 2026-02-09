@@ -10,3 +10,4 @@ simplekml
 pymupdf
 colorlog
 tqdm
+folium

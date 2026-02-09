@@ -14,6 +14,7 @@ import shutil
 import sys
 import time
 import warnings
+import webbrowser
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import ClassVar
@@ -173,7 +174,7 @@ def main():
 
         logger.info("[2/2] Running KML_Generator...")
         logger.info("-" * 60)
-        KML_Generator.run(cfg)
+        map_path = KML_Generator.run(cfg)
         logger.info("-" * 60)
 
         logger.info("=" * 60)
@@ -184,8 +185,8 @@ def main():
         logger.error("AN ERROR OCCURRED DURING EXECUTION")
         logger.error("=" * 60)
         logger.exception("Execution failed")
-        return 1
-    return 0
+        return 1, None
+    return 0, map_path
 
 
 NASA = """                                                                 
@@ -223,7 +224,7 @@ NASA = """
 
 if __name__ == "__main__":
     cfg = AppConfig()
-    exit_code = main()
+    exit_code, map_path = main()
     # Print ASCII art with delay
     lines = NASA.strip().split('\n')
     for line in lines:
@@ -237,6 +238,11 @@ if __name__ == "__main__":
         print(f"\n{'=' * 60}")
         print(f"KML output [can be opened in Google Earth/Foreflight/KMZviewer.com]: {latest_kml.resolve()}")
         print(f"{'=' * 60}")
+
+    # Open interactive map in default browser
+    if map_path and map_path.exists():
+        print(f"\nOpening interactive map in browser...")
+        webbrowser.open(map_path.resolve().as_uri())
 
     input()
 

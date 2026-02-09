@@ -82,6 +82,7 @@ def main():
         "--hidden-import=pandas",
         "--hidden-import=openpyxl",
         "--hidden-import=simplekml",
+        "--hidden-import=folium",
         "--hidden-import=requests",
         "--hidden-import=requests_ntlm",
         "--hidden-import=spnego",

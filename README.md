@@ -8,59 +8,73 @@ The T-38 PlanAid tool streamlines the flight planning process by highlighting ai
 - Contract Gas
 - Jet Air Start Unit (JASU or "Air-Start Cart")
 
+Download the app from the 'Releases' section.
+
 ## Overview
 
-This is a flight planning tool (not intended for in flight use) developed by RPL Military interns with CB's support. It gathers and organizes data from the FAA, Defense Logistics Agency (DLA), and NASA AOD APIs, then produces a KML file (`T38 Apts DD Mon YYYY.kml`). The KML file includes color-coded airport pins based on the data, helping with flight planning in ForeFlight or other EFBs.
+This is a flight planning tool (not intended for in flight use) developed by RPL Military interns with CB's support. It gathers and organizes data from the FAA, Defense Logistics Agency (DLA), and NASA AOD APIs, then produces a KML file (`T38 Apts DD Mon YYYY EXPIRES DD Mon YYYY.kml`) and an interactive HTML map. The KML file includes color-coded airport pins based on the data, helping with flight planning in ForeFlight or other EFBs. The HTML map auto-opens in your browser after each run, providing a zoomable, clickable view of all eligible airports.
 
 This is an updated version of the main T38 PlanAid with changes made to increase efficiency and modularity — uses only three scripts instead of five, with about half the lines of code. Also includes `build_exe.py` which automatically creates a distribution-ready `.exe`. Fully functional as of 1/27/2026.
 
-## To Generate a .KML file for Cross Country Planning
+## Getting the Planning Aid (Easiest Way)
 
-Just double-click `T-38 Planning Aid.exe` — no other files needed. On first run, it extracts `wb_list.xlsx` automatically. To used cached data, the app will have to run in the same folder as a preexisting `T38 Planning Aid` folder. This will save about a minute if current data already exists from a previous run.
+1. Go to the [**Releases**](https://github.com/erob1822/T38PlanAid_EvansVersion/releases) page
+2. Download `T-38 Planning Aid.exe` from the latest release
+3. Double-click it — no install, no Python, no other files needed
+
+On first run the exe downloads all data automatically and creates a `T38 Planning Aid/` folder next to itself. Subsequent runs reuse cached data if the folder is kept alongside the exe.
+
+## Output
 
 All output goes into a `T38 Planning Aid/` folder created next to the exe:
-- `T38 Planning Aid/KML_Output/` — your `.kml` files
-- `T38 Planning Aid/DATA/` — cached FAA data
-- `T38 Planning Aid/wb_list.xlsx` — airport lists (editable)
 
-The KML output path is printed at the end of each run. Open the `.kml` in ForeFlight, Google Earth, or KMZViewer.com.
+```
+T-38 Planning Aid.exe
+T38 Planning Aid/
+├── KML_Output/
+│   ├── T38 Apts DD Mon YYYY EXPIRES DD Mon YYYY.kml   ← open in ForeFlight / Google Earth
+│   ├── T38 Map DD Mon YYYY EXPIRES DD Mon YYYY.html   ← interactive browser map (auto-opens)
+│   ├── T38_Airports.txt
+│   └── T38_masterdict.xlsx
+├── DATA/                                               ← cached FAA / DLA data
+└── wb_list.xlsx                                        ← editable airport lists
+```
 
-## For Distribution
+- Open the `.kml` in **ForeFlight**, **Google Earth**, or [KMZViewer.com](https://kmzviewer.com)
+- The interactive `.html` map auto-opens in your browser after each run
 
-To build a standalone `.exe` for distribution, open a terminal in the project folder and run:
+## For Development
+
+```cmd
+git clone https://github.com/erob1822/T38PlanAid_EvansVersion.git
+cd T38PlanAid_EvansVersion
+pip install -r requirements.txt
+python T38_PlanAid.py
+```
+
+Output: `T38 Planning Aid/KML_Output/T38 Apts {date} EXPIRES {expiration}.kml` — usable in ForeFlight.
+An interactive HTML map also opens automatically in your browser.
+
+## Building the Exe
+
+To build a standalone `.exe` for distribution:
 
 ```cmd
 python build_exe.py
 ```
 
-Or, with Python installed, just double-click `build_exe.py`.
+This creates `T38 PlanAid Distribution/` containing the exe and a pre-populated `T38 Planning Aid/` folder with cached data. Upload the exe to a new GitHub Release for others to download.
 
-This creates the folder `T38 PlanAid Distribution/` containing:
-- `T-38 Planning Aid.exe` — standalone executable (can be distributed on its own)
-- `T38 Planning Aid/` — pre-populated with cached data and `wb_list.xlsx`
-
-The exe bundles `wb_list.xlsx` internally and extracts it on first run if not present. You can distribute just the `.exe` by itself — or include the `T38 Planning Aid/` folder for faster first-run performance (skips re-downloading cached data).
-
-> **Note:** To use cached data, the `T38 Planning Aid/` folder (containing `DATA/`) must be next to the `.exe`. If the exe is moved without the folder, it will re-download everything on the next run.
-
-## Quick Start (For Development)
-
-```cmd
-pip install -r requirements.txt
-python T38_PlanAid.py
-```
-
-Output: `T38 Planning Aid/KML_Output/T38 Apts {date}.kml` — usable in ForeFlight.
-
-## Files
+## Project Structure
 
 | File | Purpose |
 |------|---------|
-| `T38_PlanAid.py` | Master script - run this. Contains all config (URLs, version, paths) |
-| `Data_Acquisition.py` | Downloads data from AOD, FAA, DLA APIs |
-| `KML_Generator.py` | Builds airport database and generates KML |
+| `T38_PlanAid.py` | Master script — orchestrates everything. Contains all config (URLs, version, paths) |
+| `Data_Acquisition.py` | Downloads data from AOD, FAA, DLA APIs with 28/56-day cycle caching |
+| `KML_Generator.py` | Builds airport database, generates KML, and creates interactive HTML map |
 | `build_exe.py` | Builds standalone `.exe` and packages distribution folder |
 | `wb_list.xlsx` | Blacklist, whitelist, categories, comments, recent landings |
+| `requirements.txt` | Python dependencies |
 
 ## Quick modifications for other use cases
 
@@ -72,6 +86,10 @@ Output: `T38 Planning Aid/KML_Output/T38 Apts {date}.kml` — usable in ForeFlig
 | Add/remove airports | `wb_list.xlsx` → BLACKLIST, WHITELIST, CAT_ONE/TWO/THREE columns |
 | API URLs | `T38_PlanAid.py` → `AppConfig` class variables |
 
+## Interactive Map
+
+After each run, an interactive HTML map auto-opens in your default browser. It displays all eligible airports on an OpenStreetMap base layer with the same color-coded markers as the KML file. Click any marker for a popup with LDA, fuel, JASU status, category restrictions, and comments. The map can be zoomed, panned, and shared as a standalone `.html` file.
+
 ## Pin Colors
 
 - **Blue**: JASU listed but no recent ops - otherwise good to go
@@ -82,7 +100,7 @@ Output: `T38 Planning Aid/KML_Output/T38 Apts {date}.kml` — usable in ForeFlig
 
 ## Dependencies
 
-See `requirements.txt`. Key packages: `pandas`, `simplekml`, `requests`, `requests-ntlm`, `openpyxl`, `PyMuPDF`, `colorlog`, `tqdm`
+Install via `pip install -r requirements.txt`. Key packages: `pandas`, `simplekml`, `folium`, `requests`, `requests-ntlm`, `openpyxl`, `PyMuPDF`, `colorlog`, `tqdm`
 
 ## Troubleshooting
 
