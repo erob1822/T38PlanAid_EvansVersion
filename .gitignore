@@ -360,3 +360,4 @@ build/T-38 Planning Aid/localpycs/pyimod02_importers.pyc
 build/T-38 Planning Aid/localpycs/pyimod03_ctypes.pyc
 build/T-38 Planning Aid/localpycs/pyimod04_pywin32.pyc
 build/T-38 Planning Aid/localpycs/struct.pyc
+.gitlab-ci.yml
