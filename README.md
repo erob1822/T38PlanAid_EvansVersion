@@ -132,6 +132,14 @@ Install via `pip install -r requirements.txt`. Key packages: `pandas`, `simplekm
 - Luke Delaney
 - Jonny Kim
 
+
+
+
+
+
+
+A note on automated builds for Mac and PC
+
 ## Automated Release Builds (GitHub Actions)
 
 The repo includes a GitHub Actions workflow (`.github/workflows/build-release.yml`) that automatically builds standalone executables for **both Windows and Mac** whenever a new release is published.
