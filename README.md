@@ -25,6 +25,8 @@ This is an updated version of the main T38 PlanAid with changes made to increase
 
 No install or Python required. On first run the app downloads all data automatically and creates a `T38 Planning Aid/` folder next to itself. Subsequent runs reuse cached data if the folder is kept alongside the executable.
 
+If you can't get the download to work (windows does not tend to trust this exe), you can download the zip file and run `python build_exe.py` on a computer with Python installed, or just run `python T38_PlanAid.py` directly.
+
 > **Windows users:** Your browser or SmartScreen may flag the download as unsafe. Right-click the download → **Keep** → **Keep anyway**. This happens because the executable is not code-signed, not because it contains malware.
 
 > **Mac users:** You may see an "unidentified developer" warning. Right-click the app → **Open** → click **Open** again. This is a one-time step.
