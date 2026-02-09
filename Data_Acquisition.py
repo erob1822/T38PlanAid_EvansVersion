@@ -55,13 +55,13 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 def create_session():
-    """Configure HTTP session with retries."""
+    """Configure HTTP session with retries (including on timeouts)."""
     retry_strategy = Retry(
         total=5,
-        backoff_factor=0.5,
+        backoff_factor=1,
         status_forcelist=[429, 500, 502, 503, 504],
         allowed_methods=["GET", "HEAD", "OPTIONS"],
-        raise_on_status=False
+        raise_on_status=False,
     )
     adapter = HTTPAdapter(max_retries=retry_strategy)
     http = requests.Session()
@@ -370,12 +370,13 @@ def download_fuel(source):
     check_url = source.config.dla_fuel_check
     dl_url = source.config.dla_fuel_download
     
-    # Ping check URL
-    HTTP_SESSION.get(check_url, verify=False, timeout=30)
+    # Ping check URL (DLA site can be very slow on first connect)
+    logger.info("Contacting DLA fuel site (this can take a minute)...")
+    HTTP_SESSION.get(check_url, verify=False, timeout=(30, 120))
     
     # Download
     logger.info("Downloading Fuel Data...")
-    response = HTTP_SESSION.get(dl_url, verify=False, timeout=60)
+    response = HTTP_SESSION.get(dl_url, verify=False, timeout=(30, 120))
     response.raise_for_status()
     
     csv_path = source.download_subdir / "fuel_data.csv"
