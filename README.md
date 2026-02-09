@@ -56,7 +56,7 @@ T38 Planning Aid/
 ```cmd
 git clone https://github.com/erob1822/T38_Planning_Aid.git
 cd T38_Planning_Aid
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python T38_PlanAid.py
 ```
 
@@ -108,7 +108,7 @@ After each run, an interactive HTML map auto-opens in your default browser. It d
 
 ## Dependencies
 
-Install via `pip install -r requirements.txt`. Key packages: `pandas`, `simplekml`, `folium`, `requests`, `requests-ntlm`, `openpyxl`, `PyMuPDF`, `colorlog`, `tqdm`
+Install via `python -m pip install -r requirements.txt`. Key packages: `pandas`, `simplekml`, `folium`, `requests`, `requests-ntlm`, `openpyxl`, `PyMuPDF`, `colorlog`, `tqdm`
 
 ## Troubleshooting
 
