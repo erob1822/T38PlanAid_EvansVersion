@@ -187,8 +187,8 @@ def load_wb_list(wb_path: str = 'wb_list.xlsx') -> dict[str, any]:
     }
 
 
-def build_master_dict(apt: pd.DataFrame, rwy_lookup: Dict, fuel_set: Set, 
-                      jasu_set: Set, wb: Dict) -> Dict[str, Dict]:
+def build_master_dict(apt: pd.DataFrame, rwy_lookup: dict, fuel_set: set, 
+                      jasu_set: set, wb: dict) -> dict[str, dict]:
     """
     Build master dictionary with one entry per ICAO airport.
     
@@ -263,7 +263,7 @@ def build_master_dict(apt: pd.DataFrame, rwy_lookup: Dict, fuel_set: Set,
     return master_dict
 
 
-def create_kml_styles() -> Dict[str, Style]:
+def create_kml_styles() -> dict[str, Style]:
     """Create KML pin styles using compact dict approach."""
     styles = {k: Style() for k in ['ver', 'go', 'nogo', 'cat', 'cat1', 'prev']}
     
