@@ -14,7 +14,6 @@ Two versions are available:
 |---|---|---|
 | **Location** | `GUI Files/` | Root directory |
 | **Interface** | Dark-themed GUI with progress bars | Command-line / terminal output |
-| **Best for** | Day-to-day flight planning | Development, scripting, automation |
 | **Console window** | No | Yes |
 
 Download the app from the 'Releases' section, or build either version from source.
@@ -31,8 +30,6 @@ The GUI version (`GUI Files/`) is the recommended way to run the Planning Aid. I
 
 ### Features
 
-- Dark-themed NASA/military-style interface
-- RPL logo and T-38 banner in the header
 - Real-time progress bars for each data source (Airport & Runway Data, Chart Supplement/JASU, Recent T-38 Flights, Contract Fuel, Crew Comments)
 - Status indicators turn green on completion, red on error
 - **Map Legend** popup explaining all pin colors and inclusion logic
@@ -93,7 +90,7 @@ The CLI version (root directory) runs in the terminal and is suited for develope
 
 ### Getting the CLI (Easiest Way)
 
-> **Note:** Windows may block unsigned `.exe` files. If the download doesn't work, use the build method below.
+> **Note:** Windows may block unsigned `.exe` files. If the download doesn't work, use the build_exe method described further down.
 
 1. Go to the [latest release](https://github.com/erob1822/T38_Planning_Aid/releases/latest) and download the ZIP for your operating system:
    - **Windows**: [**T38-PlanAid-Windows.zip**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T38-PlanAid-Windows.zip)
