@@ -608,7 +608,7 @@ def parse_jasu(cfg, progress_cb=None):
     total_pdfs = len(pdf_files)
     logger.info(f"Parsing {total_pdfs} PDFs for JASU data...")
     
-    with ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=min(8, (os.cpu_count() or 4))) as executor:
         futures = {executor.submit(process_pdf, p): p for p in pdf_files}
         for i, future in enumerate(as_completed(futures), 1):
             pdf_path = futures[future]

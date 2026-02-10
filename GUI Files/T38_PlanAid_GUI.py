@@ -30,9 +30,10 @@ try:
 except ImportError:
     HAS_PIL = False
 
-# Local module imports
-import Data_Acquisition
-import KML_Generator
+# Heavy modules (Data_Acquisition, KML_Generator) are lazy-loaded
+# in the worker thread so the GUI window appears instantly.
+Data_Acquisition = None
+KML_Generator = None
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -76,8 +77,20 @@ class _GUIProgressBar:
     def set_description(self, *a, **kw): pass
     def close(self): pass
 
-# Monkey-patch tqdm inside Data_Acquisition
-Data_Acquisition.tqdm = _GUIProgressBar
+def _lazy_import_heavy_modules():
+    """Import heavy third-party modules in the worker thread, not at startup.
+
+    Deferring pandas / fitz / folium / requests imports lets the GUI window
+    appear in < 1 second instead of waiting 10-30 s for module loading
+    (especially noticeable in the PyInstaller --onedir bundle).
+    """
+    global Data_Acquisition, KML_Generator
+    import Data_Acquisition as _DA
+    import KML_Generator as _KG
+    Data_Acquisition = _DA
+    KML_Generator = _KG
+    # Apply the tqdm shim so download progress routes through the GUI
+    Data_Acquisition.tqdm = _GUIProgressBar
 
 warnings.filterwarnings("ignore")
 
@@ -400,6 +413,8 @@ class PlanAidGUI:
                     self._on_all_done(kw.get("kml_path"), kw.get("map_path"))
                 elif msg_type == "fatal":
                     self._on_fatal(kw.get("detail", ""))
+                elif msg_type == "overall_msg":
+                    self.overall_label.configure(text=kw.get("text", ""), fg=FG_DIM)
                 elif msg_type == "parse_show":
                     self._on_parse_show()
                 elif msg_type == "parse_progress":
@@ -653,6 +668,12 @@ class PlanAidGUI:
         t.start()
 
     def _run_pipeline(self):
+        # Lazy-load heavy modules (pandas, fitz, folium, etc.)
+        # so the GUI window appears immediately on startup.
+        self._send("overall_msg", text="Loading modules…")
+        _lazy_import_heavy_modules()
+        self._send("overall_msg", text="")
+
         cfg = AppConfig()
         logger = setup_logging(cfg.output_folder)
 
@@ -908,5 +929,7 @@ class PlanAidGUI:
 
 # ─────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    import multiprocessing
+    multiprocessing.freeze_support()   # required for PyInstaller
     app = PlanAidGUI()
     app.run()
