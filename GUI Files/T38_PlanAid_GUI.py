@@ -1,5 +1,5 @@
 """
-T38_PlanAid_GUI.py - GUI Version of T-38 PlanAid (Testing Only)
+T38_PlanAid_GUI.py - GUI Version of T-38 PlanAid (User-Friendly)
 
 Replaces the command-window interface with a clean tkinter GUI showing
 progress bars for each data-acquisition step.

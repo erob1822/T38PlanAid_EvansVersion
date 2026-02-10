@@ -8,17 +8,92 @@ The T-38 PlanAid tool streamlines the flight planning process by highlighting ai
 - Contract Gas
 - Jet Air Start Unit (JASU or "Air-Start Cart")
 
-Download the app from the 'Releases' section.
+Two versions are available:
+
+| | **User-Friendly (GUI)** | **Developer (CLI)** |
+|---|---|---|
+| **Location** | `GUI Files/` | Root directory |
+| **Interface** | Dark-themed GUI with progress bars | Command-line / terminal output |
+| **Best for** | Day-to-day flight planning | Development, scripting, automation |
+| **Console window** | No | Yes |
+
+Download the app from the 'Releases' section, or build either version from source.
 
 ## Overview
 
-This is a flight planning tool (not intended for in flight use) developed by RPL Military interns with CB's support. It gathers and organizes data from the FAA, Defense Logistics Agency (DLA), and NASA AOD APIs, then produces a KML file (`T38 Apts DD Mon YYYY EXPIRES DD Mon YYYY.kml`) and an interactive HTML map. The KML file includes color-coded airport pins based on the data, helping with flight planning in ForeFlight or other EFBs. The HTML map auto-opens in your browser after each run, providing a zoomable, clickable view of all eligible airports.
+This is a flight planning tool (not intended for in-flight use) developed by RPL Military interns with CB's support. It gathers and organizes data from the FAA, Defense Logistics Agency (DLA), and NASA AOD APIs, then produces a KML file (`T38 Apts DD Mon YYYY EXPIRES DD Mon YYYY.kml`) and an interactive HTML map. The KML file includes color-coded airport pins based on the data, helping with flight planning in ForeFlight or other EFBs. The HTML map auto-opens in your browser after each run, providing a zoomable, clickable view of all eligible airports.
 
-This is an updated version of the main T38 PlanAid with changes made to increase efficiency and modularity — uses only three scripts instead of five, with about half the lines of code. Also includes `build_exe.py` which automatically creates a distribution-ready `.exe`. Fully functional as of 1/27/2026.
+---
 
-## Getting the Planning Aid (Easiest Way)
+## User-Friendly Version (GUI)
 
-Note: This method probably won't work. Windows does not like running unsigned .exe files. If it doesn't work, you'll have to use the build_exe.py method described later.
+The GUI version (`GUI Files/`) is the recommended way to run the Planning Aid. It provides a polished, windowed interface with no terminal interaction required.
+
+### Features
+
+- Dark-themed NASA/military-style interface
+- RPL logo and T-38 banner in the header
+- Real-time progress bars for each data source (Airport & Runway Data, Chart Supplement/JASU, Recent T-38 Flights, Contract Fuel, Crew Comments)
+- Status indicators turn green on completion, red on error
+- **Map Legend** popup explaining all pin colors and inclusion logic
+- **Credits** popup with project attribution
+- Interactive HTML map auto-opens in your browser on completion
+- Detects locked files (`wb_list.xlsx`, `T38_masterdict.xlsx`) and offers a **Try Again** button instead of crashing
+- No console window — runs as a windowed application
+
+### Getting the GUI (Easiest Way)
+
+> **Note:** Windows may block unsigned `.exe` files. If the download doesn't work, use the build method below.
+
+1. Go to the [latest release](https://github.com/erob1822/T38_Planning_Aid/releases/latest) and download the ZIP for your operating system
+2. Extract the ZIP to a folder of your choice
+3. Run `T-38 Planning Aid GUI.exe` from inside the extracted folder
+
+No install or Python required. On first run the app downloads all data automatically. Subsequent runs reuse cached data.
+
+> **Windows:** May show a SmartScreen warning — right-click → Keep → Keep anyway.
+
+### Running the GUI from source
+
+```cmd
+cd "GUI Files"
+python -m pip install -r requirements.txt
+python T38_PlanAid_GUI.py
+```
+
+### Building the GUI exe
+
+```cmd
+cd "GUI Files"
+python build_GUI_exe.py
+```
+
+This creates `T38 PlanAid GUI Distribution/` containing:
+- The windowed `.exe` (no console)
+- Bundled images (`RPLLogo.ico`, `NASAT38s.png`)
+- A pre-populated `T38 Planning Aid/DATA/` folder with cached data
+
+The build script automatically installs all dependencies including PyInstaller and Pillow.
+
+### GUI Project Structure
+
+| File | Purpose |
+|------|---------|
+| `GUI Files/T38_PlanAid_GUI.py` | Main GUI application — tkinter interface, threaded data pipeline, progress bars |
+| `GUI Files/Data_Acquisition.py` | Downloads data from AOD, FAA, DLA APIs with 28/56-day cycle caching |
+| `GUI Files/KML_Generator.py` | Builds airport database, generates KML, and creates interactive HTML map |
+| `GUI Files/build_GUI_exe.py` | Builds standalone windowed `.exe` and packages distribution folder |
+| `GUI Files/requirements.txt` | Python dependencies (includes Pillow for header images) |
+
+---
+
+## Developer Version (CLI)
+
+The CLI version (root directory) runs in the terminal and is suited for developers, scripting, and automation. It produces identical output to the GUI version.
+
+### Getting the CLI (Easiest Way)
+
+> **Note:** Windows may block unsigned `.exe` files. If the download doesn't work, use the build method below.
 
 1. Go to the [latest release](https://github.com/erob1822/T38_Planning_Aid/releases/latest) and download the ZIP for your operating system:
    - **Windows**: [**T38-PlanAid-Windows.zip**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T38-PlanAid-Windows.zip)
@@ -30,14 +105,40 @@ No install or Python required. On first run the app downloads all data automatic
 
 > **Mac users:** You may see an "unidentified developer" warning. Right-click the app → **Open** → click **Open** again. This is a one-time step.
 
-If you can't get the download to work, you can download the full project zip and run `build_exe.py` on a computer with Python installed, or just run `T38_PlanAid.py` directly.
+### Running the CLI from source
+
+```cmd
+git clone https://github.com/erob1822/T38_Planning_Aid.git
+cd T38_Planning_Aid
+python -m pip install -r requirements.txt
+python T38_PlanAid.py
+```
+
+### Building the CLI exe
+
+```cmd
+python build_exe.py
+```
+
+This creates `T38 PlanAid Distribution/` containing the exe and a pre-populated `T38 Planning Aid/` folder with cached data.
+
+### CLI Project Structure
+
+| File | Purpose |
+|------|---------|
+| `T38_PlanAid.py` | Master script — orchestrates everything. Contains all config (URLs, version, paths) |
+| `Data_Acquisition.py` | Downloads data from AOD, FAA, DLA APIs with 28/56-day cycle caching |
+| `KML_Generator.py` | Builds airport database, generates KML, and creates interactive HTML map |
+| `build_exe.py` | Builds standalone `.exe` and packages distribution folder |
+| `requirements.txt` | Python dependencies |
+
+---
 
 ## Output
 
-All output goes into a `T38 Planning Aid/` folder created next to the exe:
+Both versions produce identical output in a `T38 Planning Aid/` folder:
 
 ```
-T-38 Planning Aid.exe
 T38 Planning Aid/
 ├── KML_Output/
 │   ├── T38 Apts DD Mon YYYY EXPIRES DD Mon YYYY.kml   ← open in ForeFlight / Google Earth
@@ -51,102 +152,38 @@ T38 Planning Aid/
 - Open the `.kml` in **ForeFlight**, **Google Earth**, or [KMZView.com](https://kmzview.com)
 - The interactive `.html` map auto-opens in your browser after each run
 
-## For Development
-
-```cmd
-git clone https://github.com/erob1822/T38_Planning_Aid.git
-cd T38_Planning_Aid
-python -m pip install -r requirements.txt
-python T38_PlanAid.py
-```
-
-Output: `T38 Planning Aid/KML_Output/T38 Apts {date} EXPIRES {expiration}.kml` — usable in ForeFlight.
-An interactive HTML map also opens automatically in your browser.
-
-## Building the Exe
-
-To build a standalone `.exe` for distribution:
-
-```cmd
-python build_exe.py
-```
-
-This creates `T38 PlanAid Distribution/` containing the exe and a pre-populated `T38 Planning Aid/` folder with cached data. Upload the exe to a new GitHub Release for others to download.
-
-## Project Structure
-
-| File | Purpose |
-|------|---------|
-| `T38_PlanAid.py` | Master script — orchestrates everything. Contains all config (URLs, version, paths) |
-| `Data_Acquisition.py` | Downloads data from AOD, FAA, DLA APIs with 28/56-day cycle caching |
-| `KML_Generator.py` | Builds airport database, generates KML, and creates interactive HTML map |
-| `build_exe.py` | Builds standalone `.exe` and packages distribution folder |
-| `wb_list.xlsx` | Blacklist, whitelist, categories, comments, recent landings |
-| `requirements.txt` | Python dependencies |
-
-## Quick modifications for other use cases
-
-| To change... | Edit this |
-|--------------|-----------|
-| Version string on KML | `T38_PlanAid.py` → `AppConfig.version` |
-| Minimum runway length | `KML_Generator.py` → search `# MODIFY: runway threshold` |
-| Pin colors/logic | `KML_Generator.py` → search `# MODIFY: pin color` |
-| Add/remove airports | `wb_list.xlsx` → BLACKLIST, WHITELIST, CAT_ONE/TWO/THREE columns |
-| API URLs | `T38_PlanAid.py` → `AppConfig` class variables |
-
 ## Interactive Map
 
 After each run, an interactive HTML map auto-opens in your default browser. It displays all eligible airports on an OpenStreetMap base layer with the same color-coded markers as the KML file. Click any marker for a popup with LDA, fuel, JASU status, category restrictions, and comments. The map can be zoomed, panned, and shared as a standalone `.html` file.
 
-## GUI Version
-
-A GUI version of the app lives in the `GUI Files/` folder. It replaces the command-line interface with a tkinter window featuring progress bars, status indicators, and auto-opens the HTML map when done.
-
-### Running from source
-
-```cmd
-cd "GUI Files"
-python -m pip install -r requirements.txt
-python -m pip install Pillow          # optional, for header images
-python T38_PlanAid_GUI.py
-```
-
-### Building the GUI exe
-
-```cmd
-cd "GUI Files"
-python build_GUI_exe.py
-```
-
-This creates `T38 PlanAid GUI Distribution/` containing the windowed exe (no console), bundled images, and a pre-populated `DATA/` folder. The build script automatically installs all dependencies including PyInstaller and Pillow.
-
-### What's different from the CLI version
-
-- Dark-themed GUI with real-time progress bars for each data source
-- RPL logo and T-38 photo in the header
-- Credits popup (accessible via button)
-- Map auto-opens in your browser on completion
-- No console window — runs as a windowed application
-
-> **Note:** The GUI version is a parallel build for testing and is not pushed to releases. The CLI version (`T38_PlanAid.py`) remains the primary distribution.
-
 ## Pin Colors
 
-- **Blue**: JASU listed but no recent ops - otherwise good to go
-- **Yellow**: No JASU listed - call FBO to verify cart
-- **Green**: Recently landed by T-38 - known to work  
-- **Red diamond**: Category 2/3 - extra planning required
-- **Red circle**: Category 1 - T-38 ops prohibited
+- **Green**: Recently landed by T-38 — known to work
+- **Blue**: JASU listed but no recent ops — otherwise good to go
+- **Yellow**: No JASU listed — call FBO to verify cart
+- **Red diamond**: Category 2/3 — extra planning required
+- **Red circle**: Category 1 — T-38 ops prohibited
+
+## Quick Modifications
+
+| To change... | Edit this |
+|--------------|-----------|
+| Version string on KML | `AppConfig.version` in the main script (`T38_PlanAid.py` or `T38_PlanAid_GUI.py`) |
+| Minimum runway length | `KML_Generator.py` → search `# MODIFY: runway threshold` |
+| Pin colors/logic | `KML_Generator.py` → search `# MODIFY: pin color` |
+| Add/remove airports | `wb_list.xlsx` → BLACKLIST, WHITELIST, CAT_ONE/TWO/THREE columns |
+| API URLs | `AppConfig` class variables in the main script |
 
 ## Dependencies
 
-Install via `python -m pip install -r requirements.txt`. Key packages: `pandas`, `simplekml`, `folium`, `requests`, `requests-ntlm`, `openpyxl`, `PyMuPDF`, `colorlog`, `tqdm`
+Install via `python -m pip install -r requirements.txt`. Key packages: `pandas`, `simplekml`, `folium`, `requests`, `requests-ntlm`, `openpyxl`, `PyMuPDF`, `colorlog`, `tqdm`. The GUI version additionally requires `Pillow` for header images.
 
 ## Troubleshooting
 
-- **File Issues**: `wb_list.xlsx` is auto-extracted on first run. If it gets corrupted, delete it from `T38 Planning Aid/` and the exe will regenerate it. Revert to a backup if you've made custom edits.
-- **URL Changes**: If FAA or DLA URLs change, update the endpoints in `T38_PlanAid.py` → `AppConfig` class variables.
-- **API Issues**: Contact AOD IT if API paths are down or outdated. Update the relevant URL in `T38_PlanAid.py` → `AppConfig`.
+- **File locked / "Try Again" prompt (GUI)**: Close `wb_list.xlsx` or `T38_masterdict.xlsx` in Excel, then click **Try Again**. The GUI detects locked files and lets you retry without restarting.
+- **File Issues**: `wb_list.xlsx` is auto-extracted on first run. If it gets corrupted, delete it from `T38 Planning Aid/` and the app will regenerate it. Revert to a backup if you've made custom edits.
+- **URL Changes**: If FAA or DLA URLs change, update the endpoints in the `AppConfig` class.
+- **API Issues**: Contact AOD IT if API paths are down or outdated. Update the relevant URL in `AppConfig`.
 
 ## Automated Release Builds (GitHub Actions)
 
@@ -171,7 +208,6 @@ Go to [Releases](https://github.com/erob1822/T38_Planning_Aid/releases), downloa
 
 You can also trigger a build manually without creating a release: go to the repo's **Actions** tab → **Build Release** → **Run workflow**. This is useful for testing the build without publishing a release.
 
-
 ## Contact Info and Attributions
 
 ### RPL Military Interns (Authors / Developers)
@@ -182,7 +218,7 @@ You can also trigger a build manually without creating a release: go to the repo
 - Alec Engl, +1(727) 488-0507 aengl5337@gmail.com (POC NOV2025)
 - Ignatius Liberto, 757-373-8787, ignatiusliberto@gmail.com (POC NOV2024) [AFD Scraping, data harvesting, LDA logic, KML Generation]
 - Adrien Richez, +1(678) 788-4015, adrichez24@gmail.com (POC SEP2024) [API scraping and AOD integration]
-- Evan Robertson +1 (410) 507-6109, erob1822@gmail.com (POC FEB2026) [.exe generation and v3.0 integration]
+- Evan Robertson +1 (410) 507-6109, erob1822@gmail.com (POC FEB2026) [.exe generation, GUI, and v3.0 integration]
 - James Zuzelski, +1(248) 930-3461, (POC JUN2024)
 
 ### CB / AOD POCs
