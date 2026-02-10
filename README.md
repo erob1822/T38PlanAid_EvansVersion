@@ -18,7 +18,7 @@ This is an updated version of the main T38 PlanAid with changes made to increase
 
 ## Getting the Planning Aid (Easiest Way)
 
-Note: This method probably won't work. Windows does not like running unsigned .exe files.
+Note: This method probably won't work. Windows does not like running unsigned .exe files. If it doesn't work, you'll have to use the build_exe.py method described later.
 
 1. Go to the [latest release](https://github.com/erob1822/T38_Planning_Aid/releases/latest) and download the ZIP for your operating system:
    - **Windows**: [**T38-PlanAid-Windows.zip**](https://github.com/erob1822/T38_Planning_Aid/releases/latest/download/T38-PlanAid-Windows.zip)
