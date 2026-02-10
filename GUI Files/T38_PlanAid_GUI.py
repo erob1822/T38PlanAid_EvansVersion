@@ -326,6 +326,38 @@ class PlanAidGUI:
             self.status_labels[step] = stat
             self.pct_labels[step] = pct_lbl
 
+            # ── Dedicated parsing sub-row (hidden until DCS parsing begins) ──
+            if step == "dcs":
+                self.parse_row = tk.Frame(container, bg=BG)
+                # Don't pack yet — shown dynamically via "parse_show" message
+
+                self.parse_label = tk.Label(
+                    self.parse_row, text="   ↳ Parsing Publications", font=FONT_SMALL,
+                    fg=FG_DIM, bg=BG, width=24, anchor="w"
+                )
+                self.parse_label.pack(side="left")
+
+                self.parse_bar = ttk.Progressbar(
+                    self.parse_row, orient="horizontal", length=260,
+                    mode="determinate", maximum=100, value=0,
+                    style="NASA.Horizontal.TProgressbar",
+                )
+                self.parse_bar.pack(side="left", padx=(6, 10))
+
+                self.parse_pct = tk.Label(
+                    self.parse_row, text="", font=FONT_SMALL,
+                    fg=FG_DIM, bg=BG, width=5, anchor="e"
+                )
+                self.parse_pct.pack(side="left")
+
+                self.parse_status = tk.Label(
+                    self.parse_row, text="", font=FONT_SMALL,
+                    fg=FG_DIM, bg=BG, width=18, anchor="w"
+                )
+                self.parse_status.pack(side="left", padx=(4, 0))
+
+                self._parse_row_visible = False
+
         # ── Bottom status area ──────────────────────────────────────
         tk.Frame(self.root, bg=BORDER, height=1).pack(fill="x", padx=24, pady=(6, 0))
 
@@ -365,6 +397,12 @@ class PlanAidGUI:
                     self._on_all_done(kw.get("kml_path"), kw.get("map_path"))
                 elif msg_type == "fatal":
                     self._on_fatal(kw.get("detail", ""))
+                elif msg_type == "parse_show":
+                    self._on_parse_show()
+                elif msg_type == "parse_progress":
+                    self._on_parse_progress(kw["current"], kw["total"], kw.get("name", ""))
+                elif msg_type == "parse_done":
+                    self._on_parse_done()
         except queue.Empty:
             pass
         self.root.after(50, self._poll_queue)
@@ -389,6 +427,35 @@ class PlanAidGUI:
         bar.configure(style="Err.Horizontal.TProgressbar", value=100)
         self.pct_labels[step].configure(text="—", fg=ACCENT_ERR)
         self.status_labels[step].configure(text="Error ✗", fg=ACCENT_ERR)
+
+    # ── Dedicated parsing sub-bar callbacks ──────────────────────────
+    def _on_parse_show(self):
+        """Reveal the parsing sub-row beneath the DCS row."""
+        if not self._parse_row_visible:
+            # Insert right after the DCS row by packing in order
+            # pack_after isn't available, but we stored dcs row ref.
+            # We'll use pack() — it will appear after all currently packed rows,
+            # so we re-pack remaining rows after it.  Simpler: just pack it
+            # right now; since step rows are packed in STEP_ORDER the dcs row
+            # already exists and the remaining rows haven't changed.
+            # We need to insert it after the dcs row.  We'll use the Tk
+            # pack 'after' option.
+            dcs_frame = self.bars["dcs"].master  # the row Frame
+            self.parse_row.pack(fill="x", pady=(0, 4), after=dcs_frame)
+            self._parse_row_visible = True
+
+    def _on_parse_progress(self, current, total, name=""):
+        """Update the parsing sub-bar with per-PDF progress."""
+        pct = int((current / total) * 100) if total else 0
+        self.parse_bar.configure(value=min(pct, 99))
+        self.parse_pct.configure(text=f"{pct}%", fg=ACCENT)
+        self.parse_status.configure(text=f"{current}/{total}  {name}", fg=ACCENT)
+
+    def _on_parse_done(self):
+        """Mark the parsing sub-bar as complete."""
+        self.parse_bar.configure(style="Done.Horizontal.TProgressbar", value=100)
+        self.parse_pct.configure(text="100%", fg=ACCENT_DONE)
+        self.parse_status.configure(text="Complete ✓", fg=ACCENT_DONE)
 
     def _on_all_done(self, kml_path=None, map_path=None):
         parts = ["All done!"]
@@ -659,13 +726,24 @@ class PlanAidGUI:
         if source.skip_download:
             # Still need to deploy cached data to the working directories
             if source.success and callable(source.deploy_method):
-                deploy_msg = "Parsing FAA pubs. This may take a while…" if name == "dcs" else "Deploying…"
+                deploy_msg = "Parsing pubs..." if name == "dcs" else "Deploying…"
                 self._send("step_progress", step=name, pct=60, phase=deploy_msg)
+                # Wire dedicated parsing bar for DCS
+                if name == "dcs":
+                    self._send("parse_show")
+                    source._parse_progress_cb = lambda i, t, pdf: self._send(
+                        "parse_progress", current=i, total=t, name=pdf
+                    )
                 try:
                     source.deploy_method(source)
                 except Exception as e:
                     logger.error(f"[{name}] Deployment failed: {e}")
                     logger.debug(traceback.format_exc())
+                finally:
+                    if hasattr(source, '_parse_progress_cb'):
+                        del source._parse_progress_cb
+                    if name == "dcs":
+                        self._send("parse_done")
             self._send("step_done", step=name, skipped=True)
             return
 
@@ -700,20 +778,32 @@ class PlanAidGUI:
 
         # Phase 4: Deploy (80 → 100%)
         if source.success and callable(source.deploy_method):
-            deploy_msg = "Parsing FAA pubs. This may take a while…" if name == "dcs" else "Deploying…"
+            deploy_msg = "Parsing pubs..." if name == "dcs" else "Deploying…"
             self._send("step_progress", step=name, pct=85, phase=deploy_msg)
-            # Re-hook tqdm for JASU parsing (dcs step)
-            _progress_pct_base = 0.85
-            _progress_pct_span = 0.12
-            _progress_callback = lambda pct: self._send(
-                "step_progress", step=name, pct=pct, phase="Processing…"
-            )
+            # For non-DCS steps, keep tqdm shim for deploy progress
+            if name != "dcs":
+                _progress_pct_base = 0.85
+                _progress_pct_span = 0.12
+                _progress_callback = lambda pct: self._send(
+                    "step_progress", step=name, pct=pct, phase="Deploying…"
+                )
+            else:
+                # DCS: use dedicated parsing sub-bar instead of tqdm shim
+                self._send("parse_show")
+                source._parse_progress_cb = lambda i, t, pdf: self._send(
+                    "parse_progress", current=i, total=t, name=pdf
+                )
             try:
                 source.deploy_method(source)
             except Exception as e:
                 logger.error(f"[{name}] Deployment failed: {e}")
                 logger.debug(traceback.format_exc())
-            _progress_callback = None
+            finally:
+                _progress_callback = None
+                if hasattr(source, '_parse_progress_cb'):
+                    del source._parse_progress_cb
+                if name == "dcs":
+                    self._send("parse_done")
 
         self._send("step_done", step=name)
 

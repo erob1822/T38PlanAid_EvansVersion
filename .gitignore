@@ -49,3 +49,276 @@ GUI Files/DATA/*.csv
 GUI Files/DATA/*.json
 GUI Files/DATA/apt_data/*.csv
 GUI Files/DATA/afd/
+GUI Files/T38 Planning Aid/DATA/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/data_download_cache.json
+GUI Files/T38 Planning Aid/DATA/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/jasu_data.csv
+GUI Files/T38 Planning Aid/DATA/afd/CS_AK_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_EC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_NC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_NE_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_NW_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_PAC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_SC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_SE_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/afd/CS_SW_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/apt_data/APT_BASE.csv
+GUI Files/T38 Planning Aid/DATA/apt_data/APT_RWY_END.csv
+GUI Files/T38 Planning Aid/DATA/apt_data/APT_RWY.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260206_105756/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260206_105853/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260206_110024/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260206_110837/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260209_094729/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260209_095114/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260209_095138/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260210_125846/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/comments/20260210_130044/comments_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/data.zip
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/jasu_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/airportgraphicchangelist01222026.txt
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_AK_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_EC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_NC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_NE_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_NW_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_PAC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_SC_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_SE_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/dcs/2026-01-22/extracted/CS_SW_20260122.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260206_105752/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260206_105851/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260206_110021/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260206_110833/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260209_094719/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260209_095110/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260209_095136/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260210_125844/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/flights/20260210_130043/flights_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260206_105754/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260206_105852/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260206_110023/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260206_110834/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260209_094724/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260209_095111/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260209_095137/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260210_125847/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/fuel/20260210_130045/fuel_data.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/data.zip
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/AFF.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/APT.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/ARB.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/ATS.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/AWOS.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/AWY.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CDR.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/COM.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/FIX.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/FSS.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/HPF.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/ILS.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/LID.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/MAA.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/MTR.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/NAV.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/PFR.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/PJA.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/README.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/STARDP.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/TWR.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/WXL.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Additional_Data/Shape_Files/Class_Airspace.dbf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Additional_Data/Shape_Files/Class_Airspace.prj
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Additional_Data/Shape_Files/Class_Airspace.shp
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Additional_Data/Shape_Files/Class_Airspace.shx
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV.zip
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV.zip
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_ARS.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_ATT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_CON.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_RWY_END.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/APT_RWY.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ARB DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ARB_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ARB_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ARB_SEG.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ATC DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ATC_ATIS.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ATC_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ATC_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ATC_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ATC_SVC.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWOS DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWOS_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWOS.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWY DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWY_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWY_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/AWY_SEG_ALT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CDR DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CDR_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CDR.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CLS_ARSP DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CLS_ARSP_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CLS_ARSP.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/COM DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/COM_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/COM.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CSV_CHG_RPT_README.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/CSV_README.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/DP DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/DP_APT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/DP_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/DP_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/DP_RTE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FIX DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FIX_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FIX_CHRT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FIX_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FIX_NAV.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FRQ DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FRQ_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FRQ.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FSS DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FSS_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FSS_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/FSS_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/HPF DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/HPF_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/HPF_CHRT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/HPF_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/HPF_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/HPF_SPD_ALT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS_DME.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS_GS.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS_MKR.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/ILS_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/LID DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/LID_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/LID.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MAA DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MAA_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MAA_CON.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MAA_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MAA_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MAA_SHP.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MIL_OPS DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MIL_OPS_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MIL_OPS.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_AGY.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_PT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_SOP.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_TERR.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/MTR_WDTH.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/NAV DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/NAV_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/NAV_CKPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/NAV_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/NAV_RMK.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PFR DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PFR_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PFR_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PFR_RMT_FMT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PFR_SEG.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PJA DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PJA_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PJA_CON.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/PJA_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/RDR DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/RDR_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/RDR.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/STAR DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/STAR_APT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/STAR_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/STAR_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/STAR_RTE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/WXL DATA LAYOUT.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/WXL_BASE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/WXL_CSV_DATA_STRUCTURE.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/WXL_SVC.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_ARS_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_ATT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_CON_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_RMK_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_RWY_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/APT_RWY_END_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ATC_ATIS_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ATC_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ATC_RMK_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ATC_SVC_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/AWOS_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/AWY_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/AWY_SEG_ALT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/COM_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/CSV_CHG_RPT_README.pdf
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/DP_APT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/DP_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/DP_RTE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/FIX_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/FIX_CHRT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/FIX_NAV_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/FRQ_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/HPF_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/HPF_CHRT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/HPF_RMK_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/HPF_SPD_ALT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ILS_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ILS_DME_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ILS_GS_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ILS_MKR_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/ILS_RMK_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/LID_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/MAA_SHP_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/MIL_OPS_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/MTR_AGY_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/MTR_PT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/MTR_SOP_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/NAV_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/NAV_CKPT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/NAV_RMK_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/PFR_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/PFR_RMT_FMT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/PFR_SEG_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/PJA_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/PJA_CON_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/RDR_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/STAR_APT_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/STAR_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/STAR_RTE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/WXL_BASE_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/CSV_Data/22_Jan_2026_CSV/25_Dec_2025_CSV-22_Jan_2026_CSV/WXL_SVC_CHG_RPT.csv
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/aff_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/apt_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/arb_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/ats_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/awos_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/awy_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/Cdr_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/com_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/fix_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/fss_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/hpf_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/ils_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/lid_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/maa_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/mtr_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/nav_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/pfr_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/pja_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/Stardp_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/Twr_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/Layout_Data/Wxl_rf.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/State_&_Country_Codes/COUNTRY.txt
+GUI Files/T38 Planning Aid/DATA/Cache/nasr/2026-01-22/extracted/State_&_Country_Codes/STATE.txt

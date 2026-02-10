@@ -440,6 +440,9 @@ def deploy_dcs_and_parse_jasu(source):
     cached_jasu = source.download_subdir / "jasu_data.csv"
     jasu_dst = source.config.data_folder / "jasu_data.csv"
     
+    # Accept an optional progress callback set by the GUI layer
+    parse_progress_cb = getattr(source, '_parse_progress_cb', None)
+    
     if cached_jasu.exists():
         # JASU already parsed for this cycle — just copy it
         logger.info("[dcs] JASU cache hit — skipping PDF parsing.")
@@ -453,7 +456,7 @@ def deploy_dcs_and_parse_jasu(source):
         
         # 2. Parse JASU
         logger.info("Parsing PDFs for JASU data...")
-        parse_jasu(source.config)
+        parse_jasu(source.config, progress_cb=parse_progress_cb)
         
         # 3. Cache the result alongside the DCS download for next run
         if jasu_dst.exists():
@@ -544,8 +547,13 @@ def _download_and_extract_zip(source, label):
 # JASU PARSING LOGIC (From erob1822)
 # ---------------------------------------------------------------------------
 
-def parse_jasu(cfg):
-    """Parse DCS/AFD PDF files for airports with JASU."""
+def parse_jasu(cfg, progress_cb=None):
+    """Parse DCS/AFD PDF files for airports with JASU.
+    
+    Args:
+        cfg: AppConfig instance.
+        progress_cb: Optional callable(current_index, total, pdf_name) for GUI progress.
+    """
     if not HAS_FITZ:
         logger.warning("PyMuPDF (fitz) not installed. Skipping JASU parsing.")
         return
@@ -597,11 +605,15 @@ def parse_jasu(cfg):
         return
 
     jasu_airports = set()
-    logger.info(f"Parsing {len(pdf_files)} PDFs for JASU data...")
+    total_pdfs = len(pdf_files)
+    logger.info(f"Parsing {total_pdfs} PDFs for JASU data...")
     
     with ThreadPoolExecutor() as executor:
         futures = {executor.submit(process_pdf, p): p for p in pdf_files}
-        for future in tqdm(as_completed(futures), total=len(futures), desc="JASU Parsing"):
+        for i, future in enumerate(tqdm(as_completed(futures), total=len(futures), desc="JASU Parsing"), 1):
+            pdf_path = futures[future]
+            if progress_cb:
+                progress_cb(i, total_pdfs, pdf_path.stem)
             jasu_airports.update(future.result())
 
     # Write Result
