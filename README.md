@@ -22,6 +22,13 @@ Download the app from the 'Releases' section, or build either version by running
 
 This is a flight planning tool (not intended for in-flight use) developed by RPL Military interns with CB's support. It gathers and organizes data from the FAA, Defense Logistics Agency (DLA), and NASA AOD APIs, then produces a KML file (`T38 Apts DD Mon YYYY EXPIRES DD Mon YYYY.kml`) and an interactive HTML map. The KML file includes color-coded airport pins based on the data, helping with flight planning in ForeFlight or other EFBs. The HTML map auto-opens in your browser after each run, providing a zoomable, clickable view of all eligible airports.
 
+## Startup (Easiest, most reliable) - python required! (easy to download on python site)
+
+1. Download the whole file as a zip.
+2. Extract the contents. All you need is the "GUI Files" folder.
+3. Open the "GUI Files" folder and run "build_GUI_exe.py" (python must be installed on your device)
+4. The script will build the app and place it in the same "GUI Files" folder.
+5. The application will have the RPL logo. You can drag and drop this to your desktop or any other directory, it is a standalone app. Double click to run!
 ---
 
 ## User-Friendly Version (GUI)
